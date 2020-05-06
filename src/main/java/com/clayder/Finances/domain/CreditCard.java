@@ -1,12 +1,16 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 @Entity
@@ -18,6 +22,13 @@ public class CreditCard implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@CreationTimestamp
+	private Date createdAt;
+	
+	@UpdateTimestamp
+	private Date updatedAt;
+	
 	private String name;
 	private Double limitCard;
 	private Integer closeDay;
@@ -73,6 +84,16 @@ public class CreditCard implements Serializable{
 
 	public void setPaymentDay(Integer paymentDay) {
 		this.paymentDay = paymentDay;
+	}
+	
+	
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
 
 	@Override
