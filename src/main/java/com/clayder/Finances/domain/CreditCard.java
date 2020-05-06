@@ -2,32 +2,44 @@ package com.clayder.Finances.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "credit_card")
 public class CreditCard implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	private String name;
-	private Double limit;
+	private Double limitCard;
 	private Integer closeDay;
 	private Integer paymentDay;
 	
 	public CreditCard() {
 	}
 
-	public CreditCard(Integer id, String name, Double limit, Integer closeDay, Integer paymentDay) {
+	public CreditCard(Long id, String name, Double limitCard, Integer closeDay, Integer paymentDay) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.limit = limit;
+		this.limitCard = limitCard;
 		this.closeDay = closeDay;
 		this.paymentDay = paymentDay;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -39,12 +51,12 @@ public class CreditCard implements Serializable{
 		this.name = name;
 	}
 
-	public Double getLimit() {
-		return limit;
+	public Double getLimitCard() {
+		return limitCard;
 	}
 
-	public void setLimit(Double limit) {
-		this.limit = limit;
+	public void setLimitCard(Double limitCard) {
+		this.limitCard = limitCard;
 	}
 
 	public Integer getCloseDay() {
