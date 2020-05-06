@@ -1,24 +1,22 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
 @Entity
-@Table(name = "credit_card")
-public class CreditCard implements Serializable{
+@Table(name = "invoices")
+public class Invoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,67 +30,81 @@ public class CreditCard implements Serializable{
 	@UpdateTimestamp
 	private Date updatedAt;
 	
+	private Double price;
+	private Integer qtyInstallments;
+	private Date dateOrder;
 	private String name;
-	private Double limitCard;
-	private Integer closeDay;
-	private Integer paymentDay;
 	
-	@OneToMany(mappedBy = "creditCard")
-	private List<Invoice> invoices = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="fk_credit_card")
+	private CreditCard creditCard;
 	
-	public CreditCard() {
+	public Invoice() {
+		
 	}
-
-	public CreditCard(Long id, String name, Double limitCard, Integer closeDay, Integer paymentDay) {
+	
+	public Invoice(Long id, Date createdAt, Date updatedAt, Double price, Integer qtyInstallments, Date dateOrder,
+			String name, CreditCard creditCard) {
 		super();
 		this.id = id;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.price = price;
+		this.qtyInstallments = qtyInstallments;
+		this.dateOrder = dateOrder;
 		this.name = name;
-		this.limitCard = limitCard;
-		this.closeDay = closeDay;
-		this.paymentDay = paymentDay;
+		this.creditCard = creditCard;
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
+
+
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Integer getQtyInstallments() {
+		return qtyInstallments;
+	}
+
+	public void setQtyInstallments(Integer qtyInstallments) {
+		this.qtyInstallments = qtyInstallments;
+	}
+
+	public Date getDateOrder() {
+		return dateOrder;
+	}
+
+	public void setDateOrder(Date dateOrder) {
+		this.dateOrder = dateOrder;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Double getLimitCard() {
-		return limitCard;
+	public CreditCard getCreditCard() {
+		return creditCard;
 	}
 
-	public void setLimitCard(Double limitCard) {
-		this.limitCard = limitCard;
+	public void setCreditCard(CreditCard creditCard) {
+		this.creditCard = creditCard;
 	}
-
-	public Integer getCloseDay() {
-		return closeDay;
-	}
-
-	public void setCloseDay(Integer closeDay) {
-		this.closeDay = closeDay;
-	}
-
-	public Integer getPaymentDay() {
-		return paymentDay;
-	}
-
-	public void setPaymentDay(Integer paymentDay) {
-		this.paymentDay = paymentDay;
-	}
-	
-	
 
 	public Date getCreatedAt() {
 		return createdAt;
@@ -100,15 +112,6 @@ public class CreditCard implements Serializable{
 
 	public Date getUpdatedAt() {
 		return updatedAt;
-	}
-	
-
-	public List<Invoice> getInvoices() {
-		return invoices;
-	}
-
-	public void setInvoices(List<Invoice> invoices) {
-		this.invoices = invoices;
 	}
 
 	@Override
@@ -127,7 +130,7 @@ public class CreditCard implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CreditCard other = (CreditCard) obj;
+		Invoice other = (Invoice) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -137,5 +140,6 @@ public class CreditCard implements Serializable{
 	}
 	
 	
+		
 	
 }
