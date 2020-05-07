@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.clayder.Finances.domain.CreditCard;
 import com.clayder.Finances.repositories.ICreditCardRepository;
+import com.clayder.Finances.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CreditCardService {
@@ -15,9 +16,8 @@ public class CreditCardService {
 	ICreditCardRepository repository;
 	
 	public CreditCard getById(Long id) {
-		 
 		Optional<CreditCard> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Cartão não encontrado"));
 		
 	}
 }

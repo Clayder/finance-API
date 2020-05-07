@@ -1,12 +1,21 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -18,10 +27,21 @@ public class CreditCard implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@CreationTimestamp
+	private Date createdAt;
+	
+	@UpdateTimestamp
+	private Date updatedAt;
+	
 	private String name;
 	private Double limitCard;
 	private Integer closeDay;
 	private Integer paymentDay;
+	
+	@JsonBackReference
+	@OneToMany(mappedBy = "creditCard")
+	private List<Invoice> invoices = new ArrayList<>();
 	
 	public CreditCard() {
 	}
@@ -73,6 +93,25 @@ public class CreditCard implements Serializable{
 
 	public void setPaymentDay(Integer paymentDay) {
 		this.paymentDay = paymentDay;
+	}
+	
+	
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	
+
+	public List<Invoice> getInvoices() {
+		return invoices;
+	}
+
+	public void setInvoices(List<Invoice> invoices) {
+		this.invoices = invoices;
 	}
 
 	@Override
