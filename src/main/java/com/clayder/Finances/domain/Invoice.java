@@ -1,7 +1,9 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "invoices")
@@ -36,6 +37,9 @@ public class Invoice implements Serializable {
 	private Integer qtyInstallments;
 	private Date dateOrder;
 	private String name;
+	
+	@OneToMany(mappedBy = "invoice")
+	private List<InvoiceInstallments> installments = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name="fk_credit_card")
@@ -114,6 +118,15 @@ public class Invoice implements Serializable {
 
 	public Date getUpdatedAt() {
 		return updatedAt;
+	}
+	
+
+	public List<InvoiceInstallments> getInstallments() {
+		return installments;
+	}
+
+	public void Installments(List<InvoiceInstallments> installments) {
+		this.installments = installments;
 	}
 
 	@Override
