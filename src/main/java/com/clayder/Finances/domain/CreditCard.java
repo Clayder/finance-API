@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "credit_card")
@@ -37,6 +39,7 @@ public class CreditCard implements Serializable{
 	private Integer closeDay;
 	private Integer paymentDay;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "creditCard")
 	private List<Invoice> invoices = new ArrayList<>();
 	
