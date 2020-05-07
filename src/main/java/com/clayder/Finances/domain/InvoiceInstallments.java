@@ -38,7 +38,7 @@ public class InvoiceInstallments implements Serializable {
 	@JoinColumn(name="fk_invoice")
 	Invoice invoice;
 	
-	Date paymentMonth;
+	java.sql.Date paymentMonth;
 	
 	@Value("false")
 	boolean isPaid;
@@ -48,7 +48,7 @@ public class InvoiceInstallments implements Serializable {
 		
 	}
 	
-	public InvoiceInstallments(Long id, Date createdAt, Date updatedAt, Invoice invoice, Date paymentMonth,
+	public InvoiceInstallments(Long id, Date createdAt, Date updatedAt, Invoice invoice, java.sql.Date paymentMonth,
 			boolean isPaid, Integer number) {
 		super();
 		this.id = id;
@@ -92,11 +92,11 @@ public class InvoiceInstallments implements Serializable {
 		this.invoice = invoice;
 	}
 
-	public Date getPaymentMonth() {
+	public java.sql.Date getPaymentMonth() {
 		return paymentMonth;
 	}
 
-	public void setPaymentMonth(Date paymentMonth) {
+	public void setPaymentMonth(java.sql.Date paymentMonth) {
 		this.paymentMonth = paymentMonth;
 	}
 

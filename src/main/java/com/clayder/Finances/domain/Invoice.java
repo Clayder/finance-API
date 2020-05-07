@@ -35,7 +35,7 @@ public class Invoice implements Serializable {
 	
 	private Double price;
 	private Integer qtyInstallments;
-	private Date dateOrder;
+	private java.sql.Date dateOrder;
 	private String name;
 	
 	@OneToMany(mappedBy = "invoice")
@@ -49,7 +49,7 @@ public class Invoice implements Serializable {
 		
 	}
 	
-	public Invoice(Long id, Date createdAt, Date updatedAt, Double price, Integer qtyInstallments, Date dateOrder,
+	public Invoice(Long id, Date createdAt, Date updatedAt, Double price, Integer qtyInstallments, java.sql.Date dateOrder,
 			String name, CreditCard creditCard) {
 		super();
 		this.id = id;
@@ -88,11 +88,11 @@ public class Invoice implements Serializable {
 		this.qtyInstallments = qtyInstallments;
 	}
 
-	public Date getDateOrder() {
+	public java.sql.Date getDateOrder() {
 		return dateOrder;
 	}
 
-	public void setDateOrder(Date dateOrder) {
+	public void setDateOrder(java.sql.Date dateOrder) {
 		this.dateOrder = dateOrder;
 	}
 
