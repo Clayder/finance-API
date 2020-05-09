@@ -2,6 +2,7 @@ package com.clayder.Finances.resources;
 
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -48,4 +49,12 @@ public class CreditCardResource {
 		cardService.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CreditCard>> getAll() {
+		List<CreditCard> list = cardService.getAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.clayder.Finances.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,9 @@ public class CreditCardService {
 		catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um cartão que possui fatura vinculada.");
 		}
+	}
+	
+	public List<CreditCard> getAll() {
+		return repository.findAll();
 	}
 }
