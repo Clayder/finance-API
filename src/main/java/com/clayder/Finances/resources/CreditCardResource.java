@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.clayder.Finances.domain.CreditCard;
+import com.clayder.Finances.dto.CreditCardDTO;
 import com.clayder.Finances.services.CreditCardService;
 
 @RestController
@@ -24,8 +25,9 @@ public class CreditCardResource {
 	private CreditCardService cardService;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<CreditCard> getById(@PathVariable Long id) {
-		CreditCard obj = cardService.getById(id);
+	public ResponseEntity<CreditCardDTO> getById(@PathVariable Long id) {
+		CreditCard card = cardService.getById(id);
+		CreditCardDTO obj = new CreditCardDTO(card);
 		return ResponseEntity.ok().body(obj);
 	}
 	
