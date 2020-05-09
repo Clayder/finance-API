@@ -30,4 +30,9 @@ public class CreditCardService {
 		this.getById(obj.getId());
 		return repository.save(obj);
 	}
+	
+	public void delete(Long id) {
+		this.getById(id);
+		repository.deleteById(id);
+	}
 }
