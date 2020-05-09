@@ -20,4 +20,9 @@ public class CreditCardService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Cartão não encontrado"));
 		
 	}
+	
+	public CreditCard insert(CreditCard obj) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
 }
