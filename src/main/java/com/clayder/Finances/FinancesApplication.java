@@ -29,7 +29,26 @@ public class FinancesApplication implements CommandLineRunner{
 		card.setName("Itaú");
 		card.setPaymentDay(12);
 		
-		creditCardRepository.saveAll(Arrays.asList(card));
+		CreditCard card2 = new CreditCard();
+		card2.setCloseDay(12);
+		card2.setLimitCard(200.00);
+		card2.setName("Santander");
+		card2.setPaymentDay(12);
+		
+		CreditCard card3 = new CreditCard();
+		card3.setCloseDay(12);
+		card3.setLimitCard(200.00);
+		card3.setName("BMG");
+		card3.setPaymentDay(12);
+		
+		CreditCard card4 = new CreditCard();
+		card4.setCloseDay(12);
+		card4.setLimitCard(200.00);
+		card4.setName("Bradesco");
+		card4.setPaymentDay(12);
+		
+		
+		creditCardRepository.saveAll(Arrays.asList(card, card2, card3, card4));
 		
 	}
 
