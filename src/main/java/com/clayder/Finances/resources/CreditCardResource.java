@@ -23,7 +23,7 @@ public class CreditCardResource {
 	private CreditCardService cardService;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> getById(@PathVariable Long id) {
+	public ResponseEntity<CreditCard> getById(@PathVariable Long id) {
 		CreditCard obj = cardService.getById(id);
 		return ResponseEntity.ok().body(obj);
 	}
@@ -34,5 +34,12 @@ public class CreditCardResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody CreditCard obj, @PathVariable Long id){
+		obj.setId(id);
+		obj = cardService.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }

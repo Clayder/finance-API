@@ -25,4 +25,9 @@ public class CreditCardService {
 		obj.setId(null);
 		return repository.save(obj);
 	}
+	
+	public CreditCard update(CreditCard obj) {
+		this.getById(obj.getId());
+		return repository.save(obj);
+	}
 }
