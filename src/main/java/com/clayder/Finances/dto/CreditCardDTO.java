@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+
+import org.hibernate.validator.constraints.Length;
+
 import com.clayder.Finances.domain.CreditCard;
 import com.clayder.Finances.domain.Invoice;
 
@@ -15,10 +24,25 @@ public class CreditCardDTO implements Serializable{
 	private Long id;
 	private Date createdAt;
 	private Date updatedAt;
+	
+	@NotEmpty(message="Preenchimento obrigatório.")
+	@Length(min=2, max=80, message="O tamanho deve ser entre 2 e 80 caracteres")
 	private String name;
+	
+	@NotNull(message="Preenchimento obrigatório.")
+	@Digits(integer=6, fraction=2)
 	private Double limitCard;
+	
+	@NotNull(message="Preenchimento obrigatório.")
+	@Min(1)
+	@Max(31)
 	private Integer closeDay;
+	
+	@NotNull(message="Preenchimento obrigatório.")
+	@Min(1)
+	@Max(31)
 	private Integer paymentDay;
+	
 	private List<Invoice> invoices = new ArrayList<>();
 	
 	public CreditCardDTO() {

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.clayder.Finances.domain.CreditCard;
+import com.clayder.Finances.dto.CreditCardDTO;
 import com.clayder.Finances.repositories.ICreditCardRepository;
 import com.clayder.Finances.services.exceptions.DataIntegrityException;
 import com.clayder.Finances.services.exceptions.ObjectNotFoundException;
@@ -62,5 +63,15 @@ public class CreditCardService {
 	public Page<CreditCard> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findAll(pageRequest);
+	}
+	
+	
+	public CreditCard fromDTO(CreditCardDTO objDto, CreditCard creditCard) {
+		creditCard.setId(objDto.getId());
+		creditCard.setName(objDto.getName());
+		creditCard.setLimitCard(objDto.getLimitCard());
+		creditCard.setCloseDay(objDto.getCloseDay());
+		creditCard.setPaymentDay(objDto.getPaymentDay());
+		return creditCard;
 	}
 }

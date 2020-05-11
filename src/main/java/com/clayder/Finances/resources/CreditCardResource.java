@@ -3,6 +3,8 @@ package com.clayder.Finances.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,8 @@ public class CreditCardResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody CreditCard obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CreditCardDTO objDTO){
+		CreditCard obj = cardService.fromDTO(objDTO, new CreditCard());
 		obj = cardService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
