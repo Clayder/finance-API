@@ -1,6 +1,7 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class InvoiceInstallments implements Serializable {
 	@JoinColumn(name="fk_invoice")
 	Invoice invoice;
 	
-	java.sql.Date paymentMonth;
+	LocalDate paymentMonth;
 	
 	@Value("false")
 	boolean isPaid;
@@ -48,7 +49,7 @@ public class InvoiceInstallments implements Serializable {
 		
 	}
 	
-	public InvoiceInstallments(Long id, Date createdAt, Date updatedAt, Invoice invoice, java.sql.Date paymentMonth,
+	public InvoiceInstallments(Long id, Date createdAt, Date updatedAt, Invoice invoice, LocalDate paymentMonth,
 			boolean isPaid, Integer number) {
 		super();
 		this.id = id;
@@ -92,11 +93,11 @@ public class InvoiceInstallments implements Serializable {
 		this.invoice = invoice;
 	}
 
-	public java.sql.Date getPaymentMonth() {
+	public LocalDate getPaymentMonth() {
 		return paymentMonth;
 	}
 
-	public void setPaymentMonth(java.sql.Date paymentMonth) {
+	public void setPaymentMonth(LocalDate paymentMonth) {
 		this.paymentMonth = paymentMonth;
 	}
 

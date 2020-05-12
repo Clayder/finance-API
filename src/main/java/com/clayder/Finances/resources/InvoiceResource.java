@@ -1,14 +1,22 @@
 package com.clayder.Finances.resources;
 
 
+import java.net.URI;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.clayder.Finances.domain.Invoice;
+import com.clayder.Finances.dto.InvoiceDTO;
+import com.clayder.Finances.services.InvoiceInstallmentsService;
 import com.clayder.Finances.services.InvoiceService;
 
 @RestController
@@ -18,9 +26,21 @@ public class InvoiceResource {
 	@Autowired
 	private InvoiceService service;
 	
+	@Autowired
+	private InvoiceInstallmentsService invoiceInstallmentsService;
+	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getById(@PathVariable Long id) {
 		Invoice obj = service.getById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody InvoiceDTO objDTO){
+		Invoice obj = service.fromDTO(objDTO, new Invoice());
+		obj = service.insert(obj, invoiceInstallmentsService);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 }

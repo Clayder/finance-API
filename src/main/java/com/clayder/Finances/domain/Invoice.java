@@ -1,6 +1,7 @@
 package com.clayder.Finances.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Invoice implements Serializable {
 	
 	private Double price;
 	private Integer qtyInstallments;
-	private java.sql.Date dateOrder;
+	private LocalDate dateOrder;
 	private String name;
 	
 	@OneToMany(mappedBy = "invoice")
@@ -49,7 +50,7 @@ public class Invoice implements Serializable {
 		
 	}
 	
-	public Invoice(Long id, Date createdAt, Date updatedAt, Double price, Integer qtyInstallments, java.sql.Date dateOrder,
+	public Invoice(Long id, Date createdAt, Date updatedAt, Double price, Integer qtyInstallments, LocalDate dateOrder,
 			String name, CreditCard creditCard) {
 		super();
 		this.id = id;
@@ -88,11 +89,11 @@ public class Invoice implements Serializable {
 		this.qtyInstallments = qtyInstallments;
 	}
 
-	public java.sql.Date getDateOrder() {
+	public LocalDate getDateOrder() {
 		return dateOrder;
 	}
 
-	public void setDateOrder(java.sql.Date dateOrder) {
+	public void setDateOrder(LocalDate dateOrder) {
 		this.dateOrder = dateOrder;
 	}
 
