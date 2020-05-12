@@ -44,7 +44,8 @@ public class CreditCardResource {
 	}
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody CreditCard obj, @PathVariable Long id){
+	public ResponseEntity<Void> update(@Valid @RequestBody CreditCardDTO objDTO, @PathVariable Long id){
+		CreditCard obj = cardService.fromDTO(objDTO, new CreditCard());
 		obj.setId(id);
 		obj = cardService.update(obj);
 		return ResponseEntity.noContent().build();
