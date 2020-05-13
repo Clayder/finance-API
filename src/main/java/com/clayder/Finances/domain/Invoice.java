@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Invoice implements Serializable {
 	private LocalDate dateOrder;
 	private String name;
 	
-	@OneToMany(mappedBy = "invoice")
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "invoice")
 	private List<InvoiceInstallments> installments = new ArrayList<>();
 	
 	@ManyToOne

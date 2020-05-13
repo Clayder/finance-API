@@ -3,6 +3,7 @@ package com.clayder.Finances.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.clayder.Finances.domain.Invoice;
 import com.clayder.Finances.dto.InvoiceDTO;
 import com.clayder.Finances.repositories.IInvoiceRepository;
+import com.clayder.Finances.services.exceptions.DataIntegrityException;
 import com.clayder.Finances.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -59,5 +61,15 @@ public class InvoiceService {
 	public Page<Invoice> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findAll(pageRequest);
+	}
+	
+	public void delete(Long id) {
+		this.getById(id);
+		try {
+			repository.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir um cartão que possui fatura vinculada.");
+		}
 	}
 }

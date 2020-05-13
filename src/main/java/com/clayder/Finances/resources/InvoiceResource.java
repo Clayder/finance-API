@@ -66,4 +66,10 @@ public class InvoiceResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.ok().build();
+	}
+	
 }
