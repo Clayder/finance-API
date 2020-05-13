@@ -35,6 +35,7 @@ public class InvoiceResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody InvoiceDTO objDTO){
 		Invoice obj = service.fromDTO(objDTO, new Invoice());
@@ -43,4 +44,13 @@ public class InvoiceResource {
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody InvoiceDTO objDTO, @PathVariable Long id){
+		Invoice obj = service.fromDTO(objDTO, new Invoice());
+		obj.setId(id);
+		service.update(obj, invoiceInstallmentsService);
+		return ResponseEntity.noContent().build();
+	}
+	
 }

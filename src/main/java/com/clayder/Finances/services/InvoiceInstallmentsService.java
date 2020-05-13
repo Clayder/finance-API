@@ -34,7 +34,15 @@ public class InvoiceInstallmentsService {
 			
 			repository.save(obj);
 		}
+	}
 	
+	public void updateByQtyInstallments(Invoice invoice, Invoice oldInvoice) {
+	
+		for (InvoiceInstallments installment : oldInvoice.getInstallments()) {
+			System.out.println(installment.getId());
+			repository.deleteById(installment.getId());
+		}
+		this.create(invoice);
 	}
 	
 }

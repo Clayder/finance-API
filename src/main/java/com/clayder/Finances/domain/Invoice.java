@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class Invoice implements Serializable {
 	private Long id;
 	
 	@CreationTimestamp
+	@Column(name = "createdAt", nullable = false, updatable=false)
 	private Date createdAt;
 	
 	@UpdateTimestamp

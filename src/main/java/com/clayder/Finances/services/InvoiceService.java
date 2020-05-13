@@ -28,6 +28,12 @@ public class InvoiceService {
 		return newObj;
 	}
 	
+	public Invoice update(Invoice newObj, InvoiceInstallmentsService invoiceInstallmentsService) {
+		Invoice old = this.getById(newObj.getId());
+		invoiceInstallmentsService.updateByQtyInstallments(newObj, old);
+		return repository.save(newObj);	
+	}
+	
 	public Invoice fromDTO(InvoiceDTO objDto, Invoice invoice) {
 		
 		invoice.setCreditCard(objDto.getCreditCard());
