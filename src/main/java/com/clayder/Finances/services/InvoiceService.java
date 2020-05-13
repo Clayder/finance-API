@@ -3,6 +3,9 @@ package com.clayder.Finances.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.clayder.Finances.domain.Invoice;
@@ -43,5 +46,18 @@ public class InvoiceService {
 		invoice.setQtyInstallments(objDto.getQtyInstallments());
 
 		return invoice;
+	}
+	
+	/**
+	 * 
+	 * @param page Número da página, iniciando no 0
+	 * @param linesPerPage Quantidade de ítem na página
+	 * @param orderBy 
+	 * @param direction Ordenar de forma crescente ou decrescente
+	 * @return
+	 */
+	public Page<Invoice> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findAll(pageRequest);
 	}
 }
