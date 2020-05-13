@@ -20,14 +20,24 @@ import com.clayder.Finances.domain.CreditCard;
 import com.clayder.Finances.dto.CreditCardDTO;
 import com.clayder.Finances.services.CreditCardService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(value="/cards")
+@Api(value="onlinestore")
 public class CreditCardResource {
 
 	@Autowired
 	private CreditCardService cardService;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Retorna a lista de pessoa"),
+		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+		    @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+		})
 	public ResponseEntity<CreditCardDTO> getById(@PathVariable Long id) {
 		CreditCard card = cardService.getById(id);
 		CreditCardDTO obj = new CreditCardDTO(card);
