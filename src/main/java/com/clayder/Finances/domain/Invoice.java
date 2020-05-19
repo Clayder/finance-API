@@ -20,33 +20,49 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "invoices")
+@ApiModel(value = "Invoice")
 public class Invoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="ID do cartão de crédito", example = "12", required = true)
 	private Long id;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt", nullable = false, updatable=false)
+	@ApiModelProperty(value="Data de criação do cartão de crédito", example = "2020-05-19T16:16:52.524Z", required = true)
 	private Date createdAt;
 	
 	@UpdateTimestamp
+	@ApiModelProperty(value="Data de atualização do cartão de crédito", example = "2020-05-19T16:16:52.524Z", required = true)
 	private Date updatedAt;
 	
+	@ApiModelProperty(value="Valor da compra", example = "200", required = true)
 	private Double price;
+	
+	@ApiModelProperty(value="Quantidade de parcelas", example = "1", required = true)
 	private Integer qtyInstallments;
+	
+	@ApiModelProperty(value="Data da compra", example = "2020-05-16", required = true)
 	private LocalDate dateOrder;
+	
+	@ApiModelProperty(value="Nome da compra", example = "Pipoqueira Elétrica", required = true)
 	private String name;
 	
+	@ApiModelProperty(value="Listagem de parcelas", required = true)
 	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "invoice")
 	private List<InvoiceInstallments> installments = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name="fk_credit_card")
+	@ApiModelProperty(value="Dados do cartão", required = true)
 	private CreditCard creditCard;
 	
 	public Invoice() {

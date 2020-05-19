@@ -39,10 +39,10 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Simple Spring Boot REST API")
-				.description("\"Um exemplo de aplicação Spring Boot REST API\"").version("1.0.0")
+		return new ApiInfoBuilder().title("API desenvolvida para estudar Spring Boot.")
+				.description("").version("1.0.0")
 				.license("Apache License Version 2.0").licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-				.contact(new Contact("Wladimilson", "https://treinaweb.com.br", "contato@treinaweb.com.br")).build();
+				.contact(new Contact("Peter Clayder", "https://github.com/Clayder/finance-API", "peterclayder@gmail.com")).build();
 	}
 
 	private List<ResponseMessage> responseMessageForGET() {
