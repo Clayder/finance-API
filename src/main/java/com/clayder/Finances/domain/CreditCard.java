@@ -18,31 +18,46 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "credit_card")
+@ApiModel(value = "CreditCard")
 public class CreditCard implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@ApiModelProperty(value="ID do cartão de crédito", example = "12", required = true)
 	private Long id;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt", nullable = false, updatable=false)
+	@ApiModelProperty(value="Data de criação do cartão de crédito", example = "2020-05-19T16:16:52.524Z", required = true)
 	private Date createdAt;
 	
 	@UpdateTimestamp
+	@ApiModelProperty(value="Data de atualização do cartão de crédito", example = "2020-05-19T16:16:52.524Z", required = true)
 	private Date updatedAt;
 	
+	@ApiModelProperty(value="Nome do cartão de crédito", example = "Itaú", required = true)
 	private String name;
+	
+	@ApiModelProperty(value="Valor limite do cartão de crédito", example = "800.00", required = true)
 	private Double limitCard;
+	
+	@ApiModelProperty(value="Data de fechamento da fatura do cartão de crédito", example = "20", required = true)
 	private Integer closeDay;
+	
+	@ApiModelProperty(value="Dia de pagamento do cartão de crédito", example = "10", required = true)
 	private Integer paymentDay;
 	
 	@JsonBackReference
 	@OneToMany(mappedBy = "creditCard")
+	@ApiModelProperty(value="Faturas do cartão de crédito", example = "[1,3,6,8]")
 	private List<Invoice> invoices = new ArrayList<>();
 	
 	public CreditCard() {

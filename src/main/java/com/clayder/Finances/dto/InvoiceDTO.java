@@ -15,34 +15,45 @@ import org.hibernate.validator.constraints.Length;
 import com.clayder.Finances.domain.CreditCard;
 import com.clayder.Finances.domain.InvoiceInstallments;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "InvoiceUI")
 public class InvoiceDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty(message="Preenchimento obrigatório.")
 	@Length(min=2, max=80, message="O tamanho deve ser entre 2 e 80 caracteres")
+	@ApiModelProperty(value="Nome da compra", example = "Pipoqueira Elétrica", required = true)
 	private String name;
 	
 	@NotNull(message="Preenchimento obrigatório.")
 	@Digits(integer=6, fraction=2)
+	@ApiModelProperty(value="Valor da compra", example = "200", required = true)
 	private Double price;
 	
 	@NotNull(message="Preenchimento obrigatório.")
 	@Min(1)
+	@ApiModelProperty(value="Quantidade de parcelas", example = "1", required = true)
 	private Integer qtyInstallments;
 	
 	@NotNull(message="Preenchimento obrigatório.")
+	@ApiModelProperty(value="Data da compra", example = "2020-05-16", required = true)
 	private LocalDate dateOrder;
 	
 	@NotNull(message="Preenchimento obrigatório.")
+	@ApiModelProperty(value="Dados do cartão", example="{\"creditCard\": {\"id\": 1}}", required = true)
 	private CreditCard creditCard;
 	
+	@ApiModelProperty(readOnly = true)
 	private List<InvoiceInstallments> installments = new ArrayList<>();
 	
 	public InvoiceDTO() {
 		
 	}
-
+	
+	
 	public InvoiceDTO(String name,Double price,Integer qtyInstallments, LocalDate dateOrder,CreditCard creditCard) {
 		super();
 		this.name = name;

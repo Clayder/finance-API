@@ -11,38 +11,51 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-
 import org.hibernate.validator.constraints.Length;
 
 import com.clayder.Finances.domain.CreditCard;
 import com.clayder.Finances.domain.Invoice;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "CreditCardUI")
 public class CreditCardDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	@ApiModelProperty(readOnly = true)
 	private Long id;
+	
+	@ApiModelProperty(readOnly = true)
 	private Date createdAt;
+	
+	@ApiModelProperty(readOnly = true)
 	private Date updatedAt;
 	
+	@ApiModelProperty(value="Nome do cartão de crédito", example = "Itaú", required = true)
 	@NotEmpty(message="Preenchimento obrigatório.")
 	@Length(min=2, max=80, message="O tamanho deve ser entre 2 e 80 caracteres")
 	private String name;
 	
+	@ApiModelProperty(value="Valor limite do cartão de crédito", example = "800.00", required = true)
 	@NotNull(message="Preenchimento obrigatório.")
 	@Digits(integer=6, fraction=2)
 	private Double limitCard;
 	
+	@ApiModelProperty(value="Data de fechamento da fatura do cartão de crédito", example = "20", required = true)
 	@NotNull(message="Preenchimento obrigatório.")
 	@Min(1)
 	@Max(31)
 	private Integer closeDay;
 	
+	@ApiModelProperty(value="Dia de pagamento do cartão de crédito", example = "10", required = true)
 	@NotNull(message="Preenchimento obrigatório.")
 	@Min(1)
 	@Max(31)
 	private Integer paymentDay;
 	
+	@ApiModelProperty(readOnly = true)
 	private List<Invoice> invoices = new ArrayList<>();
 	
 	public CreditCardDTO() {
