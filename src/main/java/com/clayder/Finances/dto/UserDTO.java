@@ -31,6 +31,7 @@ public class UserDTO implements Serializable{
 	private String email;
 	
 	@ApiModelProperty(value="Senha", example = "XXXXXX", required = true)
+	@NotEmpty(message="Preenchimento obrigatório.")
 	private String password;
 	
 	public UserDTO() {

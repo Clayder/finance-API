@@ -3,13 +3,12 @@ package com.clayder.Finances.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.clayder.Finances.domain.User;
@@ -23,6 +22,9 @@ public class UserService {
 	
 	@Autowired
 	IUserRepository repository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	public User getById(Long id) {
 		Optional<User> obj = repository.findById(id);
@@ -93,7 +95,7 @@ public class UserService {
 	public User fromDTO(UserDTO objDto, User user) {
 		user.setId(objDto.getId());
 		user.setEmail(objDto.getEmail());
-		user.setPassword(objDto.getPassword());
+		user.setPassword(pe.encode(objDto.getPassword()));
 		return user;
 	}
 }
