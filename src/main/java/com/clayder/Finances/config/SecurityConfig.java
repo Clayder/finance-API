@@ -19,7 +19,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	/**
 	 * Rotas que não vão possuir segurança
 	 */
-	private static final String[] PUBLIC_MATCHES = { "/users/**" };
+	private static final String[] PUBLIC_MATCHES = { 
+			"/users/**" ,
+			"/swagger-ui.html",
+			"/webjars/**",
+			"/swagger-resources/**",
+			"/v2/api-docs",
+			"/api/v1/users/**"
+			};
+	
+	
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
