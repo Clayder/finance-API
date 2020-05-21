@@ -6,15 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.clayder.Finances.domain.CreditCard;
+import com.clayder.Finances.domain.User;
+import com.clayder.Finances.domain.enums.Profile;
 import com.clayder.Finances.repositories.ICreditCardRepository;
+import com.clayder.Finances.repositories.IUserRepository;
 
 @SpringBootApplication
 public class FinancesApplication implements CommandLineRunner{
 	
 	@Autowired
 	private ICreditCardRepository creditCardRepository; 
+	
+	@Autowired
+	private IUserRepository userRepository; 
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FinancesApplication.class, args);
@@ -49,6 +59,15 @@ public class FinancesApplication implements CommandLineRunner{
 		
 		
 		creditCardRepository.saveAll(Arrays.asList(card, card2, card3, card4));
+		
+		
+		User user = new User();
+		user.setEmail("admin@gmail.com");
+		user.setPassword(pe.encode("12345678"));
+		user.addProfile(Profile.SUPER_ADMIN);
+		
+		userRepository.save(user);
+		
 		
 	}
 

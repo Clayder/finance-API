@@ -2,9 +2,15 @@ package com.clayder.Finances.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.clayder.Finances.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
@@ -47,7 +54,12 @@ public class User  implements Serializable {
 	@ApiModelProperty(value="Senha", example = "XXXXXX", required = true)
 	private String password;
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="profile")
+	private Set<Integer> profile = new HashSet<>();
+	
 	public User() {
+		addProfile(Profile.ADMIN);
 	}
 	
 
@@ -58,6 +70,15 @@ public class User  implements Serializable {
 		this.updatedAt = updatedAt;
 		this.email = email;
 		this.password = password;
+		addProfile(Profile.ADMIN);
+	}
+	
+	public Set<Profile> getProfile(){
+		return profile.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addProfile(Profile profile) {
+		this.profile.add(profile.getCod());
 	}
 
 	public Long getId() {

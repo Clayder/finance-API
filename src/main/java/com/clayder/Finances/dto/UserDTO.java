@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.clayder.Finances.domain.User;
 
 import io.swagger.annotations.ApiModel;
@@ -32,6 +34,7 @@ public class UserDTO implements Serializable{
 	
 	@ApiModelProperty(value="Senha", example = "XXXXXX", required = true)
 	@NotEmpty(message="Preenchimento obrigatório.")
+	@Length(min=6, max=15, message="O tamanho deve ser entre 6 e 15 caracteres")
 	private String password;
 	
 	public UserDTO() {
