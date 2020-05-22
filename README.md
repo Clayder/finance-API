@@ -41,9 +41,19 @@ Esse é um projeto apenas para estudo que vai permanecer em constante desenvolvi
 4.  Executar: **_docker-compose up db_**
     
 
-# **Consumo da API via Postman**
+# **:globe_with_meridians: Consumo da API via Postman**
 
 Como importar projetos no Postman ? [Clique aqui !!](https://nfe.io/docs/comum/postman/)
+
+Para consumir a API utilizando o Postman, importar os arquivos abaixo: 
+
+ 1. **Cartão de crédito** [https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Cart%C3%A3o%20de%20cr%C3%A9dito.postman_collection.json](https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Cart%C3%A3o%20de%20cr%C3%A9dito.postman_collection.json)
+ 
+ 2. **Faturas** [https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Faturas.postman_collection.json](https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Faturas.postman_collection.json)
+ 
+ 3. **Usuários** [https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Usu%C3%A1rios.postman_collection.json](https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Usu%C3%A1rios.postman_collection.json)
+
+4. **Variáveis de ambiente** [https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Desenvolvimento.postman_environment.json](https://raw.githubusercontent.com/Clayder/finance-API/master/public/postman/Desenvolvimento.postman_environment.json)
 
 # **:open_file_folder: Estrutura do projeto**
 
@@ -107,11 +117,15 @@ Para realizar a geração do JWT, tem que ser feita uma requisição POST [http:
         "password": "12345678"
     }
 
+
 Se ocorrer tudo ok, a API vai retornar status code 200 e com o JWT no header (Authorization) do response .
+
 
 ![](https://github.com/Clayder/finance-API/blob/master/public/img/jwt/gerando-jwt.gif?raw=true)
 
+
 É necessário passar o Authorization em todos os outros endpoints da API (menos no POST /login)
+
 
 ![](https://github.com/Clayder/finance-API/blob/master/public/img/jwt/utilizando-jwt.gif?raw=true)
 
