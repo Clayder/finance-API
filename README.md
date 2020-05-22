@@ -1,6 +1,6 @@
   
 
-# **Objetivo**
+# **:fist_right::fist_left: Objetivo ** 
 
 O projeto está sendo desenvolvido utilizando como base o curso **Spring Boot, Hibernate, REST, Ionic, JWT, S3, MySQL, MongoDB (https://www.udemy.com/course/spring-boot-ionic/ ).** Esse é um excelente curso, indicado para quem está começando a aprender e também para quem já tem conhecimentos em Spring Boot.
 
@@ -8,22 +8,22 @@ O projeto está sendo desenvolvido utilizando como base o curso **Spring Boot, H
 
 Esse é um projeto apenas para estudo que vai permanecer em constante desenvolvimento, o objetivo principal é obter mais conhecimentos em:
 
--   Spring Boot
--   Docker
--   API Rest
--   Swagger
--   Postman
--   MySQL
--   Hibernate
--   Git
--   JWT - JSON Web Tokens
--   Spring Security
--   Java
--   TDD
--   RabbitMQ
--   Jenkins
+-   :heavy_check_mark: Spring Boot
+-   :heavy_check_mark: Docker
+-   :heavy_check_mark: API Rest
+-   :heavy_check_mark: Swagger
+-  :heavy_check_mark:  Postman
+-   :heavy_check_mark: MySQL
+-   :heavy_check_mark: Hibernate
+-   :heavy_check_mark: Git
+-   :heavy_check_mark: JWT - JSON Web Tokens
+-   :heavy_check_mark: Spring Security
+-   :heavy_check_mark: Java
+-   :heavy_multiplication_x: TDD
+-   :heavy_multiplication_x: RabbitMQ
+-   :heavy_multiplication_x: Jenkins
     
-# **Instalação do projeto**
+# **:arrow_down: Instalação do projeto**
 
 1.  Instalar e configurar o java 8 .
 2.  Instalar e configurar o MySql.
@@ -45,7 +45,7 @@ Esse é um projeto apenas para estudo que vai permanecer em constante desenvolvi
 
 Como importar projetos no Postman ? [Clique aqui !!](https://nfe.io/docs/comum/postman/)
 
-# **Estrutura do projeto**
+# **:open_file_folder: Estrutura do projeto**
 
 ### Camadas
 
@@ -67,7 +67,7 @@ Como importar projetos no Postman ? [Clique aqui !!](https://nfe.io/docs/comum/p
     
 3.  **Services/Exception:** Possui as classes que criam exceções personalizadas.
   
-# **Documentação da API**
+# **:spiral_notepad: Documentação da API**
 
 A documentação da API foi feita utilizando o Swagger e toda essa geração de documentação foi feita utilizando a biblioteca **SpringFox**. Os links abaixo possuem excelentes explicações de como utilizar essa biblioteca com Spring Boot.
 
@@ -94,7 +94,7 @@ Para acessar a documentação do projeto é só inicializar o servidor e acessar
 
   
 
-# **JSON Web Tokens**
+# **:closed_lock_with_key: JSON Web Tokens**
 
 A segurança do projeto foi feito utilizando o **Spring Security**, através dessa biblioteca é possível gerar o JWT, para realizar a autenticação na API.
 
