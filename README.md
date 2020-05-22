@@ -1,6 +1,6 @@
   
 
-# **:fist_right::fist_left: Objetivo ** 
+# ** :fist_right::fist_left: Objetivo ** 
 
 O projeto está sendo desenvolvido utilizando como base o curso **Spring Boot, Hibernate, REST, Ionic, JWT, S3, MySQL, MongoDB (https://www.udemy.com/course/spring-boot-ionic/ ).** Esse é um excelente curso, indicado para quem está começando a aprender e também para quem já tem conhecimentos em Spring Boot.
 
