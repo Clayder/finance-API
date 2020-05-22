@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "dbee280d-9ffb-46d9-949e-072e97c441ca",
+		"name": "Cartão de crédito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cartões de creditos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/cards/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paginação: Listar cartões de credito",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/cards?linesPerPage=2&page=1&direction=DESC",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards"
+					],
+					"query": [
+						{
+							"key": "linesPerPage",
+							"value": "2"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "direction",
+							"value": "DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar cartões de credito",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/cards",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deletar cartão de crédito",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/cards/1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar cartão de crédito",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " \n {\n\t\"name\": \"Itaú\",\n    \"limitCard\": 800,\n    \"closeDay\": 23,\n    \"paymentDay\": 5.7\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/cards",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar cartão",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " \n {\n\t\"name\": \"Santander\",\n    \"limitCard\": 1000.0,\n    \"closeDay\": 15,\n    \"paymentDay\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/cards/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"cards",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
