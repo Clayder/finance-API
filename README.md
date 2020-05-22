@@ -62,9 +62,10 @@ Como importar projetos no Postman ? [Clique aqui !!](https://nfe.io/docs/comum/p
 ### Sub-camadas
 
 1.  **Resource/Exception:**
+
 	1.1. **classe ResourceExceptionHandler:** Tem a função de interceptar e tratar as exceções lançadas nos resources (controllers). Essa classe possui uma annotation chamada **@ControllerAdvice**, ele que intercepta as exceções geradas por métodos anotados com **@RequestMapping.** Mais informações:[https://medium.com/@jovannypcg/understanding-springs-controlleradvice-cd96a364033f](https://medium.com/@jovannypcg/understanding-springs-controlleradvice-cd96a364033f)
     
-2.  **Services/Exception:** Possui as classes que criam exceções personalizadas.
+3.  **Services/Exception:** Possui as classes que criam exceções personalizadas.
   
 # **Documentação da API**
 
@@ -73,8 +74,10 @@ A documentação da API foi feita utilizando o Swagger e toda essa geração de 
 1.  Site oficial da biblioteca: [http://springfox.github.io/springfox/](http://springfox.github.io/springfox)
 2.  Tutorial: [https://www.treinaweb.com.br/blog/documentando-uma-api-spring-boot-com-o-swagger/](https://www.treinaweb.com.br/blog/documentando-uma-api-spring-boot-com-o-swagger/)
 3.  Exemplos de utilização:
-4.1.  [https://github.com/springfox/springfox/tree/master/springfox-petstore/src/main/java/springfox/petstore](https://github.com/springfox/springfox/tree/master/springfox-petstore/src/main/java/springfox/petstore)
-4.2.  [https://github.com/springfox/springfox](https://github.com/springfox/springfox)
+
+    3.1.  [https://github.com/springfox/springfox/tree/master/springfox-petstore/src/main/java/springfox/petstore](https://github.com/springfox/springfox/tree/master/springfox-petstore/src/main/java/springfox/petstore)
+    
+    3.2.  [https://github.com/springfox/springfox](https://github.com/springfox/springfox)
     
 
 Para acessar a documentação do projeto é só inicializar o servidor e acessar [http://localhost:8080/swagger-ui.html#/](http://localhost:8080/swagger-ui.html#)
