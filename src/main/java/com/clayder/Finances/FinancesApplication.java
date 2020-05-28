@@ -33,6 +33,8 @@ public class FinancesApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+		/*
+		
 		CreditCard card = new CreditCard();
 		card.setCloseDay(12);
 		card.setLimitCard(200.00);
@@ -68,6 +70,7 @@ public class FinancesApplication implements CommandLineRunner{
 		
 		userRepository.save(user);
 		
+		*/
 		
 	}
 

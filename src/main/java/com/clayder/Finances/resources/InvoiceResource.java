@@ -33,7 +33,7 @@ import io.swagger.annotations.ResponseHeader;
 @RestController
 @RequestMapping(value="/api/v1/invoices")
 @Api(value = "/invoices", tags = "Faturas", description = "API para realizar o gerenciamento das faturas.")
-public class InvoiceResource {
+public class InvoiceResource extends Resource{
 
 	@Autowired
 	private InvoiceService service;
@@ -43,13 +43,13 @@ public class InvoiceResource {
 	
 	@ApiOperation(value = "Retorna uma compra da fatura.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK."),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+		    @ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces="application/json")
 	public ResponseEntity<Invoice> getById(@PathVariable Long id) {
@@ -62,13 +62,13 @@ public class InvoiceResource {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Cadastrar uma compra na fatura.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 201, message = "OK", responseHeaders = {@ResponseHeader(name = "location", response = URI.class) }),
-		    @ApiResponse(code = 400, message = "Requisição inválida.", response = ResponseError.class),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+		    @ApiResponse(code = 201, message = status201Message, responseHeaders = {@ResponseHeader(name = "location", response = URI.class) }),
+		    @ApiResponse(code = 400, message = status400Message, response = ResponseError.class),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	public ResponseEntity<Void> insert(@Valid @RequestBody InvoiceDTO objDTO){
 		Invoice obj = service.fromDTO(objDTO, new Invoice());
@@ -81,14 +81,14 @@ public class InvoiceResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Atualizar dados de uma compra da fatura.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "OK"),
-		    @ApiResponse(code = 400, message = "Requisição inválida.", response = ResponseError.class),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+			@ApiResponse(code = 204, message = status204Message),
+		    @ApiResponse(code = 400, message = status400Message, response = ResponseError.class),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, produces="application/json", consumes="application/json")
 	public ResponseEntity<Void> update(@Valid @RequestBody InvoiceDTO objDTO, @PathVariable Long id){
@@ -101,12 +101,12 @@ public class InvoiceResource {
 	
 	@ApiOperation(value = "Retornar compras das faturas.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK"),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+			@ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(method = RequestMethod.GET, produces="application/json")
 	public ResponseEntity<Page<Invoice>> getAll(
@@ -121,14 +121,14 @@ public class InvoiceResource {
 	
 	@ApiOperation(value = "Deletar uma compra da fatura.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK"),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 422, message = "Entidade improcessável.", response = ResponseError.class),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+			@ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 422, message = status422Message, response = ResponseError.class),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces="application/json")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {

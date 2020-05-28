@@ -32,7 +32,7 @@ import io.swagger.annotations.ResponseHeader;
 @RestController
 @RequestMapping(value="/api/v1/cards")
 @Api(value = "/cards", tags = "Cartão de crédito", description = "API para realizar o gerenciamento de cartão de crédito.")
-public class CreditCardResource {
+public class CreditCardResource extends Resource{
 
 	@Autowired
 	private CreditCardService cardService;
@@ -40,13 +40,13 @@ public class CreditCardResource {
 	@RequestMapping(value="/{id}", method = RequestMethod.GET, produces="application/json")
 	@ApiOperation(value = "Retorna um cartões de crédito específico.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK."),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+		    @ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	public ResponseEntity<CreditCardDTO> getById(@PathVariable Long id) {
 		CreditCard card = cardService.getById(id);
@@ -58,13 +58,13 @@ public class CreditCardResource {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiOperation(value = "Cadastro de cartão de crédito.")
 	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "OK", responseHeaders = {@ResponseHeader(name = "location", response = URI.class) }),
-		    @ApiResponse(code = 400, message = "Requisição inválida.", response = ResponseError.class),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+			@ApiResponse(code = 201, message = status201Message, responseHeaders = {@ResponseHeader(name = "location", response = URI.class) }),
+		    @ApiResponse(code = 400, message = status400Message, response = ResponseError.class),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	public ResponseEntity<Void> insert(@Valid @RequestBody CreditCardDTO objDTO ){
 		CreditCard obj = cardService.fromDTO(objDTO, new CreditCard());
@@ -77,14 +77,14 @@ public class CreditCardResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiOperation(value = "Atualizar dados do cartão de crédito.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 204, message = "OK"),
-		    @ApiResponse(code = 400, message = "Requisição inválida.", response = ResponseError.class),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+		    @ApiResponse(code = 204, message = status204Message),
+		    @ApiResponse(code = 400, message = status400Message, response = ResponseError.class),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT, produces="application/json", consumes="application/json")
 	public ResponseEntity<Void> update(@Valid @RequestBody CreditCardDTO objDTO, @PathVariable Long id){
@@ -96,14 +96,14 @@ public class CreditCardResource {
 	
 	@ApiOperation(value = "Deletar cartão de crédito.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK"),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 404, message = "Não encontrado."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 422, message = "Entidade improcessável.", response = ResponseError.class),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+		    @ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 404, message = status404Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 422, message = status422Message, response = ResponseError.class),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces="application/json")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -113,12 +113,12 @@ public class CreditCardResource {
 	
 	@ApiOperation(value = "Retorna os cartões de crédito.")
 	@ApiResponses(value = {
-		    @ApiResponse(code = 200, message = "OK"),
-		    @ApiResponse(code = 401, message = "Não autorizado."),
-		    @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
-		    @ApiResponse(code = 405, message = "Método não permitido"),
-		    @ApiResponse(code = 415, message = "Tipo de mídia não suportado."),
-		    @ApiResponse(code = 500, message = "Erro interno."),
+			@ApiResponse(code = 200, message = status200Message),
+		    @ApiResponse(code = 401, message = status401Message),
+		    @ApiResponse(code = 403, message = status403Message),
+		    @ApiResponse(code = 405, message = status405Message),
+		    @ApiResponse(code = 415, message = status415Message),
+		    @ApiResponse(code = 500, message = status500Message),
 		})
 	@RequestMapping(method = RequestMethod.GET, produces="application/json")
 	public ResponseEntity<Page<CreditCard>> getAll(

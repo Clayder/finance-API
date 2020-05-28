@@ -55,6 +55,8 @@ public class CreditCard implements Serializable{
 	@ApiModelProperty(value="Dia de pagamento do cartão de crédito", example = "10", required = true)
 	private Integer paymentDay;
 	
+	private Integer teste;
+	
 	@JsonBackReference
 	@OneToMany(mappedBy = "creditCard")
 	@ApiModelProperty(value="Faturas do cartão de crédito", example = "[1,3,6,8]")
@@ -154,6 +156,14 @@ public class CreditCard implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Integer getTeste() {
+		return teste;
+	}
+
+	public void setTeste(Integer teste) {
+		this.teste = teste;
 	}
 	
 	
