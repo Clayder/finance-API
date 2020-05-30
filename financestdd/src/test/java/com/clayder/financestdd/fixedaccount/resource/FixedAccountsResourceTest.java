@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
@@ -79,8 +81,21 @@ public class FixedAccountsResourceTest {
 	}
 
 	@Test
-	@DisplayName("Erro ao criar uma conta.")
-	public void createFixedAccountErrorTest() {
+	@DisplayName("[400] Criando conta com body vazio.")
+	public void createFixedAccountErrorTest() throws Exception {
+		String json = new ObjectMapper().writeValueAsString(new FixedAccountDTO());
 
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.post(FIXED_ACCOUNT_API)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(json);
+
+		mvc.perform(request)
+				.andExpect( status().isBadRequest())
+				.andExpect( jsonPath("errors", Matchers.hasSize(3)))
+				.andExpect( jsonPath("status", Matchers.equalTo(400)))
+				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
+				.andExpect( jsonPath("timeStamp").isNotEmpty());
 	}
 }
