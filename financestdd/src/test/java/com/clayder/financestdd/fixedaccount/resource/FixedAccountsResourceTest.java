@@ -41,7 +41,7 @@ public class FixedAccountsResourceTest {
 	private final String FIXED_ACCOUNT_API = "/api/v1/fixed-accounts";
 
 	@Test
-	@DisplayName("Deve criar uma conta com sucesso.")
+	@DisplayName("[201] Criando conta fixa com sucesso.")
 	public void createFixedAccountTest() throws Exception {
 
 		FixedAccountDTO dto = FixedAccountDTO.builder()
