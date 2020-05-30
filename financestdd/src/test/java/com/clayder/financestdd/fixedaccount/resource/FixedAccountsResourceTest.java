@@ -3,6 +3,8 @@ package com.clayder.financestdd.fixedaccount.resource;
 import com.clayder.financestdd.api.fixedaccount.dto.FixedAccountDTO;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,12 +69,12 @@ public class FixedAccountsResourceTest {
 				.content(json);
 
 		mvc.perform(request)
-				.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andExpect(MockMvcResultMatchers.jsonPath("id").isNotEmpty())
-				.andExpect(MockMvcResultMatchers.jsonPath("name").value(dto.getName()))
-				.andExpect(MockMvcResultMatchers.jsonPath("price").value(dto.getPrice()))
-				.andExpect(MockMvcResultMatchers.jsonPath("paymentDay").value(dto.getPaymentDay()))
-				.andExpect(MockMvcResultMatchers.jsonPath("owner").value(dto.getOwner()));
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("id").isNotEmpty())
+				.andExpect(jsonPath("name").value(dto.getName()))
+				.andExpect(jsonPath("price").value(dto.getPrice()))
+				.andExpect(jsonPath("paymentDay").value(dto.getPaymentDay()))
+				.andExpect(jsonPath("owner").value(dto.getOwner()));
 
 	}
 
