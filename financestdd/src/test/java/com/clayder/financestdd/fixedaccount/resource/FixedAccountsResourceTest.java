@@ -1,4 +1,4 @@
-package com.clayder.financestdd.resource;
+package com.clayder.financestdd.fixedaccount.resource;
 
 import com.clayder.financestdd.api.fixedaccount.dto.FixedAccountDTO;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles("test")
 @WebMvcTest
 @AutoConfigureMockMvc
-public class FixedAccountsResource {
+public class FixedAccountsResourceTest {
 
 	@Autowired
 	MockMvc mvc;
