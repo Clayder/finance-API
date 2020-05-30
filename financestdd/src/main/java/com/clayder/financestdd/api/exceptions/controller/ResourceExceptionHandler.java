@@ -1,4 +1,4 @@
-package com.clayder.financestdd.api.exceptions.resource;
+package com.clayder.financestdd.api.exceptions.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,8 @@
-package com.clayder.financestdd.api.fixedaccount.resource;
+package com.clayder.financestdd.api.fixedaccount.controller;
 
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
