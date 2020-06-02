@@ -1,6 +1,10 @@
 package com.clayder.financestdd.api.fixedaccount.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,18 +16,18 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class FixedAccountDTO {
 
-	private Integer id;
+    private Integer id;
 
-	@NotEmpty
-	private String name;
+    @NotEmpty
+    private String name;
 
-	@NotNull
-	private double price;
+    @NotNull
+    private double price;
 
-	@NotNull
-	private Integer paymentDay;
+    @NotNull
+    private Integer paymentDay;
 
-	@NotEmpty
-	private String owner;
+    @NotEmpty
+    private String owner;
 
 }

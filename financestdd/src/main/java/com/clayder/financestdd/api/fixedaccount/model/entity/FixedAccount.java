@@ -10,11 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FixedAccount {
-
     private Integer id;
-	private String name;
-	private double price;
-	private Integer paymentDay;
-	private String owner;
-
+    private String name;
+    private double price;
+    private Integer paymentDay;
+    private String owner;
 }
