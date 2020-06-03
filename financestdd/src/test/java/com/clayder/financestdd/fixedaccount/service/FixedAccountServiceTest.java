@@ -39,12 +39,13 @@ public class FixedAccountServiceTest {
     public void saveFixedAccountTest(){
 
         // cenario
-        FixedAccount account = FixedAccount.builder()
-				.name("Vivo")
-				.owner("Peter")
-				.paymentDay(22)
-				.price(54.99)
-				.build();
+        FixedAccount account = createValidAccount();
+
+        /**
+         * Quando for executado o método existsByName do repository, retornar false
+         * dessa forma vamos conseguir simular que não existe conta fixa cadastrada.
+         */
+        Mockito.when( repository.existsByName(Mockito.anyString()) ).thenReturn(false);
 
         /**
          * Simulando o comportamento do repository

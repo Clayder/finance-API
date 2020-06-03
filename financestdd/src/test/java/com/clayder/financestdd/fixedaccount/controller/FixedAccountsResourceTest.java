@@ -94,7 +94,7 @@ public class FixedAccountsResourceTest {
 	}
 
 	@Test
-	@DisplayName("Deve lançar erro ao tentar cadastrar uma conta fixa com nome repetido.")
+	@DisplayName("[422] Deve lançar erro ao tentar cadastrar uma conta fixa com nome repetido.")
 	public void creteFixedAccountWithDuplicatedName() throws Exception {
 
 		FixedAccountDTO dto = createNewAccount();
