@@ -3,6 +3,7 @@ package com.clayder.financestdd.fixedaccount.controller;
 import com.clayder.financestdd.api.fixedaccount.dto.FixedAccountDTO;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
+import com.clayder.financestdd.api.exceptions.type.BusinessException;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,12 +43,7 @@ public class FixedAccountsResourceTest {
 	@DisplayName("[201] Criando conta fixa com sucesso.")
 	public void createFixedAccountTest() throws Exception {
 
-		FixedAccountDTO dto = FixedAccountDTO.builder()
-				.name("Vivo")
-				.owner("Peter")
-				.paymentDay(22)
-				.price(54.99)
-				.build();
+		FixedAccountDTO dto = createNewAccount();
 
 		FixedAccount saveFixedAccount = FixedAccount.builder()
 				.name("Vivo")
@@ -94,6 +90,30 @@ public class FixedAccountsResourceTest {
 				.andExpect( jsonPath("errors", Matchers.hasSize(3)))
 				.andExpect( jsonPath("status", Matchers.equalTo(400)))
 				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
+				.andExpect( jsonPath("timeStamp").isNotEmpty());
+	}
+
+	@Test
+	@DisplayName("Deve lançar erro ao tentar cadastrar uma conta fixa com nome repetido.")
+	public void creteFixedAccountWithDuplicatedName() throws Exception {
+
+		FixedAccountDTO dto = createNewAccount();
+		String json = new ObjectMapper().writeValueAsString(dto);
+		String message = "Conta fixa já cadastrada";
+
+		BDDMockito.given(service.save(Mockito.any(FixedAccount.class)))
+				.willThrow(new BusinessException(message));
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.post(FIXED_ACCOUNT_API)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(json);
+
+		mvc.perform(request)
+				.andExpect( status().isUnprocessableEntity())
+				.andExpect( jsonPath("status", Matchers.equalTo(422)))
+				.andExpect( jsonPath("msg").value(message))
 				.andExpect( jsonPath("timeStamp").isNotEmpty());
 	}
 
