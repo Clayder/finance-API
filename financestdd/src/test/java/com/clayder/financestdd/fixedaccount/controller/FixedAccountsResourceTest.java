@@ -50,7 +50,7 @@ public class FixedAccountsResourceTest {
 				.owner("Peter")
 				.paymentDay(22)
 				.price(54.99)
-				.id(1)
+				.id((long) 1)
 				.build();
 
 		BDDMockito.given(service.save(Mockito.any(FixedAccount.class)))

@@ -53,7 +53,7 @@ public class FixedAccountServiceTest {
          */
         Mockito.when( repository.save(account) ).thenReturn(
                 FixedAccount.builder()
-                        .id(1)
+                        .id((long) 1)
                         .name("Vivo")
                         .owner("Peter")
                         .paymentDay(22)
