@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @WebMvcTest
 @AutoConfigureMockMvc
-public class FixedAccountsResourceTest {
+public class FixedAccountsControllerTest {
 
 	@Autowired
 	MockMvc mvc;
