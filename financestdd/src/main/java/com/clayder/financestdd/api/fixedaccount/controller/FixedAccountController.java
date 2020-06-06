@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.clayder.financestdd.api.fixedaccount.dto.FixedAccountDTO;
+import org.springframework.web.server.ResponseStatusException;
+
 import javax.validation.Valid;
 
 @RestController
@@ -31,7 +33,11 @@ public class FixedAccountController {
 
 	@GetMapping("{id}")
 	public FixedAccountDTO getById(@PathVariable Long id){
-		FixedAccount account = service.getById(id).get();
-		return modelMapper.map(account, FixedAccountDTO.class);
+
+		return service
+				.getById(id)
+				.map( account -> modelMapper.map(account, FixedAccountDTO.class) )
+				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
 	}
 }

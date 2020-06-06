@@ -153,6 +153,23 @@ public class FixedAccountsResourceTest {
 
 	}
 
+	@Test
+	@DisplayName("[404] Deve retornar resource not found quando a conta não existir.")
+	public void fixedAccountNotFoundTest()  throws Exception{
+
+		BDDMockito
+				.given(service.getById( Mockito.anyLong() )) // sempre que pesquisar por qualquer long id
+				.willReturn(Optional.empty()); // retornar vazio
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.get(FIXED_ACCOUNT_API.concat("/1"))
+				.accept(MediaType.APPLICATION_JSON);
+
+		mvc.perform(request)
+				.andExpect(status().isNotFound());
+	}
+
+
 	private FixedAccountDTO createNewAccount(){
 		return FixedAccountDTO.builder()
 				.name("Vivo")
