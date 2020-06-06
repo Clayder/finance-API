@@ -44,7 +44,8 @@ public class FixedAccountController {
 	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id){
-		FixedAccount account = service.getById(id).get();
+		FixedAccount account = service.getById(id)
+				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		service.delete(account);
 	}
 }

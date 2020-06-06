@@ -187,6 +187,23 @@ public class FixedAccountsControllerTest {
 				.andExpect( status().isNoContent() );
 	}
 
+	@Test
+	@DisplayName("[404] Deve retornar resource not found quando não encontrar a conta para deletar.")
+	public void deleteInexistentFixedAccountTest() throws Exception{
+		// cenario
+		BDDMockito.
+				given( service.getById( anyLong() ) ) // Sempre que pesquisar por qualquer long id
+				.willReturn(
+						Optional.empty()
+				); // retornar vazio
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.delete(FIXED_ACCOUNT_API.concat("/"+1));
+
+		mvc.perform( request )
+				.andExpect( status().isNotFound() );
+	}
+
 
 	private FixedAccountDTO createNewAccount(){
 		return FixedAccountDTO.builder()
