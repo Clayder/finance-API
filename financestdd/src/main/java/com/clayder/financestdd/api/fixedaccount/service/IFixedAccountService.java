@@ -9,4 +9,6 @@ public interface IFixedAccountService {
     FixedAccount save(FixedAccount account);
 
     Optional<FixedAccount> getById(Long id);
+
+    void delete(FixedAccount account);
 }

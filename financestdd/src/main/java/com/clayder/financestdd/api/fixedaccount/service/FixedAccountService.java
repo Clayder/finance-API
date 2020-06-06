@@ -28,4 +28,9 @@ public class FixedAccountService implements IFixedAccountService{
     public Optional<FixedAccount> getById(Long id) {
         return Optional.empty();
     }
+
+    @Override
+    public void delete(FixedAccount account) {
+
+    }
 }

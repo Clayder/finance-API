@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -158,7 +159,7 @@ public class FixedAccountsControllerTest {
 	public void fixedAccountNotFoundTest()  throws Exception{
 
 		BDDMockito
-				.given(service.getById( Mockito.anyLong() )) // sempre que pesquisar por qualquer long id
+				.given(service.getById( anyLong() )) // sempre que pesquisar por qualquer long id
 				.willReturn(Optional.empty()); // retornar vazio
 
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -167,6 +168,23 @@ public class FixedAccountsControllerTest {
 
 		mvc.perform(request)
 				.andExpect(status().isNotFound());
+	}
+
+	@Test
+	@DisplayName("[204] Deve deletar uma conta fixa.")
+	public void deleteFixedAccountTest() throws Exception{
+		// cenario
+		BDDMockito.
+				given( service.getById( anyLong() ) ) // Sempre que pesquisar por qualquer long id
+				.willReturn(
+						Optional.of( FixedAccount.builder().id(1L).build() )
+				); // retornar uma conta com ID = 1
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.delete(FIXED_ACCOUNT_API.concat("/"+1));
+
+		mvc.perform( request )
+				.andExpect( status().isNoContent() );
 	}
 
 
