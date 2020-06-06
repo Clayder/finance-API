@@ -5,6 +5,8 @@ import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.model.repository.IFixedAccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class FixedAccountService implements IFixedAccountService{
 
@@ -20,5 +22,10 @@ public class FixedAccountService implements IFixedAccountService{
             throw new BusinessException("Conta fixa já cadastrada");
         }
         return repository.save(account);
+    }
+
+    @Override
+    public Optional<FixedAccount> getById(Long id) {
+        return Optional.empty();
     }
 }

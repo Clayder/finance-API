@@ -28,4 +28,10 @@ public class FixedAccountController {
 		entity = service.save(entity);
 		return modelMapper.map(entity, FixedAccountDTO.class);
 	}
+
+	@GetMapping("{id}")
+	public FixedAccountDTO getById(@PathVariable Long id){
+		FixedAccount account = service.getById(id).get();
+		return modelMapper.map(account, FixedAccountDTO.class);
+	}
 }

@@ -22,6 +22,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -115,6 +118,39 @@ public class FixedAccountsResourceTest {
 				.andExpect( jsonPath("status", Matchers.equalTo(422)))
 				.andExpect( jsonPath("msg").value(message))
 				.andExpect( jsonPath("timeStamp").isNotEmpty());
+	}
+
+	@Test
+	@DisplayName("[200] Deve obter informações de uma conta fixa.")
+	public void getFixedAccountDetailsIsTest() throws Exception {
+
+		// cenario
+		Long id = 1L;
+
+		FixedAccount account = FixedAccount.builder()
+				.id(id)
+				.name(createNewAccount().getName())
+				.owner(createNewAccount().getOwner())
+				.paymentDay(createNewAccount().getPaymentDay())
+				.price(createNewAccount().getPrice())
+				.build();
+
+		BDDMockito.given(service.getById(id)).willReturn(Optional.of(account));
+
+		//execução
+
+		 MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.get(FIXED_ACCOUNT_API.concat("/"+id))
+				.accept(MediaType.APPLICATION_JSON);
+
+		mvc.perform(request)
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("id").value(1))
+				.andExpect(jsonPath("name").value(createNewAccount().getName()))
+				.andExpect(jsonPath("price").value(createNewAccount().getPrice()))
+				.andExpect(jsonPath("paymentDay").value(createNewAccount().getPaymentDay()))
+				.andExpect(jsonPath("owner").value(createNewAccount().getOwner()));
+
 	}
 
 	private FixedAccountDTO createNewAccount(){
