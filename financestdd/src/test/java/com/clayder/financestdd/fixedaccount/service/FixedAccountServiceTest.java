@@ -15,6 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -96,6 +98,40 @@ public class FixedAccountServiceTest {
          * Verifica que nunca será executado o método save
          */
         Mockito.verify(repository, Mockito.never()).save(account);
+    }
+
+    @Test
+    @DisplayName("Deve obter uma conta fixa pelo ID")
+    public void getByIdTest(){
+        Long id = 1L;
+
+        FixedAccount account = createValidAccount();
+        account.setId(id);
+        Mockito.when(repository.findById(id)).thenReturn(Optional.of(account));
+
+        // execução
+        Optional<FixedAccount> foundAccount = service.getById(id);
+
+        // Verificação
+        assertThat( foundAccount.isPresent() ).isTrue();
+        assertThat( foundAccount.get().getId() ).isEqualTo(id);
+        assertThat( foundAccount.get().getName() ).isEqualTo(account.getName());
+        assertThat( foundAccount.get().getOwner() ).isEqualTo(account.getOwner());
+        assertThat( foundAccount.get().getPaymentDay() ).isEqualTo(account.getPaymentDay());
+        assertThat( foundAccount.get().getPrice() ).isEqualTo(account.getPrice());
+    }
+
+    @Test
+    @DisplayName("Deve retornar vazio ao tentar obter uma conta fixa que não existe.")
+    public void accountNotFoundByIdTest(){
+
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
+
+        // execução
+        Optional<FixedAccount> foundAccount = service.getById(1L);
+
+        // Verificação
+        assertThat( foundAccount.isPresent() ).isFalse();
     }
 
     private FixedAccount createValidAccount(){

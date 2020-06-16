@@ -26,7 +26,7 @@ public class FixedAccountService implements IFixedAccountService{
 
     @Override
     public Optional<FixedAccount> getById(Long id) {
-        return Optional.empty();
+        return this.repository.findById(id);
     }
 
     @Override
