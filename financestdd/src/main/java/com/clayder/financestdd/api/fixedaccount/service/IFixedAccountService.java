@@ -11,4 +11,6 @@ public interface IFixedAccountService {
     Optional<FixedAccount> getById(Long id);
 
     void delete(FixedAccount account);
+
+    FixedAccount update(FixedAccount account);
 }

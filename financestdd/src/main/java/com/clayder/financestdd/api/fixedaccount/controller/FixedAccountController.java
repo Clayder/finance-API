@@ -48,4 +48,20 @@ public class FixedAccountController {
 				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 		service.delete(account);
 	}
+
+	@PutMapping("{id}")
+	public FixedAccountDTO update(@RequestBody FixedAccount dto, @PathVariable Long id) {
+
+		FixedAccount account = service.getById(id)
+				.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+		account.setName(dto.getName());
+		account.setOwner(dto.getOwner());
+		account.setPaymentDay(dto.getPaymentDay());
+		account.setPrice(dto.getPrice());
+
+		service.update(account);
+
+		return modelMapper.map(account, FixedAccountDTO.class);
+	}
 }

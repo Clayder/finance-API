@@ -33,4 +33,9 @@ public class FixedAccountService implements IFixedAccountService{
     public void delete(FixedAccount account) {
 
     }
+
+    @Override
+    public FixedAccount update(FixedAccount account) {
+        return null;
+    }
 }
