@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.print.attribute.standard.Media;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -47,7 +48,7 @@ public class FixedAccountsControllerTest {
 	@DisplayName("[201] Criando conta fixa com sucesso.")
 	public void createFixedAccountTest() throws Exception {
 
-		FixedAccountDTO dto = createNewAccount();
+		FixedAccountDTO dto = createNewAccountDTO();
 
 		FixedAccount saveFixedAccount = FixedAccount.builder()
 				.name("Vivo")
@@ -101,7 +102,7 @@ public class FixedAccountsControllerTest {
 	@DisplayName("[422] Deve lançar erro ao tentar cadastrar uma conta fixa com nome repetido.")
 	public void creteFixedAccountWithDuplicatedName() throws Exception {
 
-		FixedAccountDTO dto = createNewAccount();
+		FixedAccountDTO dto = createNewAccountDTO();
 		String json = new ObjectMapper().writeValueAsString(dto);
 		String message = "Conta fixa já cadastrada";
 
@@ -130,10 +131,10 @@ public class FixedAccountsControllerTest {
 
 		FixedAccount account = FixedAccount.builder()
 				.id(id)
-				.name(createNewAccount().getName())
-				.owner(createNewAccount().getOwner())
-				.paymentDay(createNewAccount().getPaymentDay())
-				.price(createNewAccount().getPrice())
+				.name(createNewAccountDTO().getName())
+				.owner(createNewAccountDTO().getOwner())
+				.paymentDay(createNewAccountDTO().getPaymentDay())
+				.price(createNewAccountDTO().getPrice())
 				.build();
 
 		BDDMockito.given(service.getById(id)).willReturn(Optional.of(account));
@@ -147,10 +148,10 @@ public class FixedAccountsControllerTest {
 		mvc.perform(request)
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("id").value(1))
-				.andExpect(jsonPath("name").value(createNewAccount().getName()))
-				.andExpect(jsonPath("price").value(createNewAccount().getPrice()))
-				.andExpect(jsonPath("paymentDay").value(createNewAccount().getPaymentDay()))
-				.andExpect(jsonPath("owner").value(createNewAccount().getOwner()));
+				.andExpect(jsonPath("name").value(createNewAccountDTO().getName()))
+				.andExpect(jsonPath("price").value(createNewAccountDTO().getPrice()))
+				.andExpect(jsonPath("paymentDay").value(createNewAccountDTO().getPaymentDay()))
+				.andExpect(jsonPath("owner").value(createNewAccountDTO().getOwner()));
 
 	}
 
@@ -204,9 +205,97 @@ public class FixedAccountsControllerTest {
 				.andExpect( status().isNotFound() );
 	}
 
+	@Test
+    @DisplayName("[200] Deve atualizar os dados da conta")
+	public void updateFixedAccountTest() throws Exception{
+        // cenario
 
-	private FixedAccountDTO createNewAccount(){
+        Long id = 1L;
+
+        // cenario
+        FixedAccount accountUpdate = FixedAccount.builder()
+                .id(id)
+                .name("Tim")
+				.owner("Fernanda")
+				.paymentDay(28)
+				.price(70.00)
+                .build();
+
+        String json = new ObjectMapper().writeValueAsString(accountUpdate);
+
+        BDDMockito.
+				given( service.getById(id) ) // Sempre que pesquisar pelo id
+				.willReturn(Optional.of(
+				        FixedAccount.builder()
+                                .id(id)
+                                .name("Vivo")
+                                .owner("Peter")
+                                .paymentDay(22)
+                                .price(54.99)
+                                .build()
+                )); // retornar novos dados oara a conta
+
+		/**
+		 * Sempre que atualizar uma conta, retornar a propria conta
+		 */
+        BDDMockito.given(service.update(accountUpdate)).willReturn(accountUpdate);
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put(FIXED_ACCOUNT_API.concat("/"+id))
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+		mvc.perform( request )
+				.andExpect( status().isOk() )
+				.andExpect(jsonPath("id").value(accountUpdate.getId()))
+				.andExpect(jsonPath("name").value(accountUpdate.getName()))
+				.andExpect(jsonPath("price").value(accountUpdate.getPrice()))
+				.andExpect(jsonPath("paymentDay").value(accountUpdate.getPaymentDay()))
+				.andExpect(jsonPath("owner").value(accountUpdate.getOwner()));
+    }
+
+    @Test
+    @DisplayName("[404] Deve retornar 404 ao tentar atualizar uma conta inexistente.")
+	public void updateInexistentFixedAccountTest() throws Exception {
+         // cenario
+        String json = new ObjectMapper().writeValueAsString(createNewAccountDTO());
+
+		// cenario
+        FixedAccount accountUpdate = FixedAccount.builder()
+                .id(1L)
+                .name("Tim")
+				.owner("Fernanda")
+				.paymentDay(28)
+				.price(70.00)
+                .build();
+        BDDMockito.
+				given( service.getById( anyLong() ) ) // Sempre que pesquisar por qualquer long id
+				.willReturn(
+						Optional.empty() // retornar vazio
+				);
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put(FIXED_ACCOUNT_API.concat("/"+1))
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+		mvc.perform( request )
+				.andExpect( status().isNotFound() );
+    }
+
+    private FixedAccountDTO createNewAccountDTO(){
 		return FixedAccountDTO.builder()
+				.name("Vivo")
+				.owner("Peter")
+				.paymentDay(22)
+				.price(54.99)
+				.build();
+	}
+
+	private FixedAccount createNewAccount(){
+		return FixedAccount.builder()
 				.name("Vivo")
 				.owner("Peter")
 				.paymentDay(22)
