@@ -179,9 +179,9 @@ public class FixedAccountServiceTest {
          org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(account));
 
          /**
-          * Verifico que o método repository.update nunca foi chamado
+          * Verifico que o método repository.save nunca foi chamado
           */
-         Mockito.verify( repository, Mockito.never() ).update(account);
+        Mockito.verify( repository, Mockito.never() ).save(account);
     }
 
      @Test
