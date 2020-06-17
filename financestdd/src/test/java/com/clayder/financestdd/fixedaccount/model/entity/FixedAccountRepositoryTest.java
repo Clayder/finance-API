@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -31,12 +32,7 @@ public class FixedAccountRepositoryTest {
     public void returnTrueWhenNameExists() {
         //cenario
         String name = "vivo";
-        FixedAccount account = FixedAccount.builder()
-                .name("vivo")
-                .owner("Peter")
-                .paymentDay(22)
-                .price(54.99)
-                .build();
+        FixedAccount account = createNewFixedAccount();
 
         entityManager.persist(account);
 
@@ -58,5 +54,32 @@ public class FixedAccountRepositoryTest {
 
         //verificacao
         assertThat(exists).isFalse();
+    }
+
+    @Test
+    @DisplayName("Deve obter uma conta fixa pelo ID.")
+    public void findByIdTest(){
+
+        /**
+         * Para retornarmos uma conta fixa pelo ID, primeiro temos que inserir ela na
+         * base de dados.
+         */
+        FixedAccount account = createNewFixedAccount();
+        entityManager.persist(account);
+
+        // execução
+        Optional<FixedAccount> foundAccount = repository.findById(account.getId());
+
+        // Verifico
+        assertThat(foundAccount.isPresent()).isTrue();
+    }
+
+    private FixedAccount createNewFixedAccount() {
+        return FixedAccount.builder()
+                    .name("vivo")
+                    .owner("Peter")
+                    .paymentDay(22)
+                    .price(54.99)
+                    .build();
     }
 }
