@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class FixedAccountService implements IFixedAccountService{
+public class FixedAccountService implements IFixedAccountService {
 
     private IFixedAccountRepository repository;
 
-    public FixedAccountService(IFixedAccountRepository repository){
+    public FixedAccountService(IFixedAccountRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public FixedAccount save(FixedAccount account) {
-        if( repository.existsByName(account.getName())){
+        if (repository.existsByName(account.getName())) {
             throw new BusinessException("Conta fixa já cadastrada");
         }
         account.setId(null);
@@ -32,15 +32,15 @@ public class FixedAccountService implements IFixedAccountService{
 
     @Override
     public void delete(FixedAccount account) {
-        if(account == null || account.getId() == null){
+        if (account == null || account.getId() == null) {
             throw new IllegalArgumentException("Id não pode ser nulo.");
         }
         this.repository.delete(account);
     }
 
     @Override
-    public FixedAccount update(FixedAccount account){
-        if(account == null || account.getId() == null){
+    public FixedAccount update(FixedAccount account) {
+        if (account == null || account.getId() == null) {
             throw new IllegalArgumentException("Id não pode ser nulo.");
         }
         return this.repository.save(account);

@@ -32,13 +32,13 @@ public class FixedAccountServiceTest {
      * Método será executado antes de cada teste
      */
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         this.service = new FixedAccountService(repository);
     }
 
     @Test
     @DisplayName("Salvando conta fixa com sucesso.")
-    public void saveFixedAccountTest(){
+    public void saveFixedAccountTest() {
 
         // cenario
         FixedAccount account = createValidAccount();
@@ -47,13 +47,13 @@ public class FixedAccountServiceTest {
          * Quando for executado o método existsByName do repository, retornar false
          * dessa forma vamos conseguir simular que não existe conta fixa cadastrada.
          */
-        Mockito.when( repository.existsByName(Mockito.anyString()) ).thenReturn(false);
+        Mockito.when(repository.existsByName(Mockito.anyString())).thenReturn(false);
 
         /**
          * Simulando o comportamento do repository
          * Quando salvar a conta returnar a conta de exemplo
          */
-        Mockito.when( repository.save(account) ).thenReturn(
+        Mockito.when(repository.save(account)).thenReturn(
                 FixedAccount.builder()
                         .id((long) 1)
                         .name("Vivo")
@@ -76,7 +76,7 @@ public class FixedAccountServiceTest {
 
     @Test
     @DisplayName("Deve lançar erro ao tentar salvar uma conta fixa com nome duplicado.")
-    public void shouldNotSaveAccountWithDuplicatedName(){
+    public void shouldNotSaveAccountWithDuplicatedName() {
         // cenario
         FixedAccount account = createValidAccount();
 
@@ -84,7 +84,7 @@ public class FixedAccountServiceTest {
          * Quando for executado o método existsByName do repository, retornar true
          * dessa forma vamos conseguir simular que já essa conta fixa cadastrada.
          */
-        Mockito.when( repository.existsByName(Mockito.anyString()) ).thenReturn(true);
+        Mockito.when(repository.existsByName(Mockito.anyString())).thenReturn(true);
 
         //execução
         Throwable exception = Assertions.catchThrowable(() -> service.save(account));
@@ -102,7 +102,7 @@ public class FixedAccountServiceTest {
 
     @Test
     @DisplayName("Deve obter uma conta fixa pelo ID")
-    public void getByIdTest(){
+    public void getByIdTest() {
         Long id = 1L;
 
         FixedAccount account = createValidAccount();
@@ -113,17 +113,17 @@ public class FixedAccountServiceTest {
         Optional<FixedAccount> foundAccount = service.getById(id);
 
         // Verificação
-        assertThat( foundAccount.isPresent() ).isTrue();
-        assertThat( foundAccount.get().getId() ).isEqualTo(id);
-        assertThat( foundAccount.get().getName() ).isEqualTo(account.getName());
-        assertThat( foundAccount.get().getOwner() ).isEqualTo(account.getOwner());
-        assertThat( foundAccount.get().getPaymentDay() ).isEqualTo(account.getPaymentDay());
-        assertThat( foundAccount.get().getPrice() ).isEqualTo(account.getPrice());
+        assertThat(foundAccount.isPresent()).isTrue();
+        assertThat(foundAccount.get().getId()).isEqualTo(id);
+        assertThat(foundAccount.get().getName()).isEqualTo(account.getName());
+        assertThat(foundAccount.get().getOwner()).isEqualTo(account.getOwner());
+        assertThat(foundAccount.get().getPaymentDay()).isEqualTo(account.getPaymentDay());
+        assertThat(foundAccount.get().getPrice()).isEqualTo(account.getPrice());
     }
 
     @Test
     @DisplayName("Deve retornar vazio ao tentar obter uma conta fixa que não existe.")
-    public void accountNotFoundByIdTest(){
+    public void accountNotFoundByIdTest() {
 
         Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
 
@@ -131,12 +131,12 @@ public class FixedAccountServiceTest {
         Optional<FixedAccount> foundAccount = service.getById(1L);
 
         // Verificação
-        assertThat( foundAccount.isPresent() ).isFalse();
+        assertThat(foundAccount.isPresent()).isFalse();
     }
 
     @Test
     @DisplayName("Atualizando uma conta fixa com sucesso.")
-    public void updateFixedAccountTest(){
+    public void updateFixedAccountTest() {
         // Dados da conta que eu quero atualizar
         Long id = 1L;
         FixedAccount account = createValidAccount();
@@ -152,7 +152,7 @@ public class FixedAccountServiceTest {
         /**
          * Quando for atualizar a conta ID = 1L, retornar os novos dados.
          */
-        Mockito.when( repository.save(newDataAccount) ).thenReturn( newDataAccount );
+        Mockito.when(repository.save(newDataAccount)).thenReturn(newDataAccount);
 
         /**
          * Realizando a atualização
@@ -168,73 +168,73 @@ public class FixedAccountServiceTest {
 
     @Test
     @DisplayName("Tentando atualizar conta fixa que não existe.")
-    public void errorUpdateFixedAccountTest(){
+    public void errorUpdateFixedAccountTest() {
         // Dados da conta que eu quero atualizar
         FixedAccount account = createValidAccount();
         account.setId(null);
 
         /**
-          * Verifico que a exception IllegalArgumentException foi lançada ao executar o método update
-          */
-         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(account));
+         * Verifico que a exception IllegalArgumentException foi lançada ao executar o método update
+         */
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(account));
 
-         /**
-          * Verifico que o método repository.save nunca foi chamado
-          */
-        Mockito.verify( repository, Mockito.never() ).save(account);
+        /**
+         * Verifico que o método repository.save nunca foi chamado
+         */
+        Mockito.verify(repository, Mockito.never()).save(account);
     }
 
-     @Test
+    @Test
     @DisplayName("Deletando uma conta fixa.")
-    public void deleteFixedAccountTest(){
+    public void deleteFixedAccountTest() {
 
-         // Dados da conta que eu quero atualizar
+        // Dados da conta que eu quero atualizar
         Long id = 1L;
         FixedAccount account = createValidAccount();
         account.setId(id);
 
         // execução
 
-         /**
-          * Garantindo que nenhum erro seja lançado
-          */
-         org.junit.jupiter.api.Assertions.assertDoesNotThrow( () -> service.delete(account));
+        /**
+         * Garantindo que nenhum erro seja lançado
+         */
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(() -> service.delete(account));
 
         //verificação
 
-         /**
-          * Verifico que o método delete foi executado pelo menos uma vez
-          */
-         Mockito.verify(repository, Mockito.times(1)).delete(account);
-     }
+        /**
+         * Verifico que o método delete foi executado pelo menos uma vez
+         */
+        Mockito.verify(repository, Mockito.times(1)).delete(account);
+    }
 
-     @Test
+    @Test
     @DisplayName("Tentando deletar uma conta fixa que não existe.")
-    public void errorDeleteFixedAccountTest(){
+    public void errorDeleteFixedAccountTest() {
 
-         // Dados da conta que eu quero atualizar
+        // Dados da conta que eu quero atualizar
         FixedAccount account = createValidAccount();
         account.setId(null);
 
         //execução
 
-         /**
-          * Verifico que a exception IllegalArgumentException foi lançada ao executar o método delete
-          */
-         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(account));
+        /**
+         * Verifico que a exception IllegalArgumentException foi lançada ao executar o método delete
+         */
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(account));
 
-         /**
-          * Verifico que o método repository.delete nunca foi chamado
-          */
-         Mockito.verify( repository, Mockito.never() ).delete(account);
-     }
+        /**
+         * Verifico que o método repository.delete nunca foi chamado
+         */
+        Mockito.verify(repository, Mockito.never()).delete(account);
+    }
 
-    private FixedAccount createValidAccount(){
+    private FixedAccount createValidAccount() {
         return FixedAccount.builder()
-				.name("Vivo")
-				.owner("Peter")
-				.paymentDay(22)
-				.price(54.99)
-				.build();
+                .name("Vivo")
+                .owner("Peter")
+                .paymentDay(22)
+                .price(54.99)
+                .build();
     }
 }

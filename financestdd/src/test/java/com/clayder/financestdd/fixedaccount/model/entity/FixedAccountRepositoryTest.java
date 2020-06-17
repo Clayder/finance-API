@@ -13,12 +13,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @DataJpaTest
-@AutoConfigureTestDatabase(replace=AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class FixedAccountRepositoryTest {
 
     @Autowired
@@ -58,7 +59,7 @@ public class FixedAccountRepositoryTest {
 
     @Test
     @DisplayName("Deve obter uma conta fixa pelo ID.")
-    public void findByIdTest(){
+    public void findByIdTest() {
 
         /**
          * Para retornarmos uma conta fixa pelo ID, primeiro temos que inserir ela na
@@ -76,10 +77,10 @@ public class FixedAccountRepositoryTest {
 
     private FixedAccount createNewFixedAccount() {
         return FixedAccount.builder()
-                    .name("vivo")
-                    .owner("Peter")
-                    .paymentDay(22)
-                    .price(54.99)
-                    .build();
+                .name("vivo")
+                .owner("Peter")
+                .paymentDay(22)
+                .price(54.99)
+                .build();
     }
 }
