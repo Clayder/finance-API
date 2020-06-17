@@ -182,6 +182,51 @@ public class FixedAccountServiceTest {
                 .hasMessage("Id não pode ser nulo.");
     }
 
+     @Test
+    @DisplayName("Deletando uma conta fixa.")
+    public void deleteFixedAccountTest(){
+
+         // Dados da conta que eu quero atualizar
+        Long id = 1L;
+        FixedAccount account = createValidAccount();
+        account.setId(id);
+
+        // execução
+
+         /**
+          * Garantindo que nenhum erro seja lançado
+          */
+         org.junit.jupiter.api.Assertions.assertDoesNotThrow( () -> service.delete(account));
+
+        //verificação
+
+         /**
+          * Verifico que o método delete foi executado pelo menos uma vez
+          */
+         Mockito.verify(repository, Mockito.times(1)).delete(account);
+     }
+
+     @Test
+    @DisplayName("Tentando deletar uma conta fixa que não existe.")
+    public void errorDeleteFixedAccountTest(){
+
+         // Dados da conta que eu quero atualizar
+        FixedAccount account = createValidAccount();
+        account.setId(null);
+
+        //execução
+
+         /**
+          * Verifico que a exception IllegalArgumentException foi lançada ao executar o método delete
+          */
+         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(account));
+
+         /**
+          * Verifico que o método repository.delete nunca foi chamado
+          */
+         Mockito.verify( repository, Mockito.never() ).delete(account);
+     }
+
     private FixedAccount createValidAccount(){
         return FixedAccount.builder()
 				.name("Vivo")

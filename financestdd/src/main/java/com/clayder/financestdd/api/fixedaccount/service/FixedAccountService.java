@@ -32,7 +32,10 @@ public class FixedAccountService implements IFixedAccountService{
 
     @Override
     public void delete(FixedAccount account) {
-
+        if(account == null || account.getId() == null){
+            throw new IllegalArgumentException("Id não pode ser nulo.");
+        }
+        this.repository.delete(account);
     }
 
     @Override
