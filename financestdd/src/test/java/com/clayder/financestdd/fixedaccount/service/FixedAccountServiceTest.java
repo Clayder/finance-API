@@ -152,12 +152,12 @@ public class FixedAccountServiceTest {
         /**
          * Quando for atualizar a conta ID = 1L, retornar os novos dados.
          */
-        Mockito.when( service.update(account) ).thenReturn( newDataAccount );
+        Mockito.when( repository.save(newDataAccount) ).thenReturn( newDataAccount );
 
         /**
          * Realizando a atualização
          */
-        FixedAccount accountUpdated = service.update(account);
+        FixedAccount accountUpdated = service.update(newDataAccount);
 
         assertThat(accountUpdated.getId()).isNotNull();
         assertThat(accountUpdated.getName()).isEqualTo(newDataAccount.getName());
@@ -173,13 +173,15 @@ public class FixedAccountServiceTest {
         FixedAccount account = createValidAccount();
         account.setId(null);
 
-        //execução
-        Throwable exception = Assertions.catchThrowable(() -> service.update(account));
+        /**
+          * Verifico que a exception IllegalArgumentException foi lançada ao executar o método update
+          */
+         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(account));
 
-        // verificações
-        assertThat(exception)
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("Id não pode ser nulo.");
+         /**
+          * Verifico que o método repository.update nunca foi chamado
+          */
+         Mockito.verify( repository, Mockito.never() ).update(account);
     }
 
      @Test
