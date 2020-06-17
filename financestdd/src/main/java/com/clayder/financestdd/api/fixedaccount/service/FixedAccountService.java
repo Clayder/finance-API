@@ -21,6 +21,7 @@ public class FixedAccountService implements IFixedAccountService{
         if( repository.existsByName(account.getName())){
             throw new BusinessException("Conta fixa já cadastrada");
         }
+        account.setId(null);
         return repository.save(account);
     }
 
@@ -35,7 +36,10 @@ public class FixedAccountService implements IFixedAccountService{
     }
 
     @Override
-    public FixedAccount update(FixedAccount account) {
-        return null;
+    public FixedAccount update(FixedAccount account){
+        if(account == null || account.getId() == null){
+            throw new IllegalArgumentException("Id não pode ser nulo.");
+        }
+        return this.repository.save(account);
     }
 }

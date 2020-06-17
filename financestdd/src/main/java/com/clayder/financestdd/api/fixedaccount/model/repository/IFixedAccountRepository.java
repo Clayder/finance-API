@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface IFixedAccountRepository extends JpaRepository<FixedAccount, Long> {
 
     boolean existsByName(String name);
+
+    public FixedAccount update(FixedAccount account);
 }

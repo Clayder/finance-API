@@ -134,6 +134,54 @@ public class FixedAccountServiceTest {
         assertThat( foundAccount.isPresent() ).isFalse();
     }
 
+    @Test
+    @DisplayName("Atualizando uma conta fixa com sucesso.")
+    public void updateFixedAccountTest(){
+        // Dados da conta que eu quero atualizar
+        Long id = 1L;
+        FixedAccount account = createValidAccount();
+        account.setId(id);
+
+        // Novos dados da conta ID = 1L
+        FixedAccount newDataAccount = account;
+        newDataAccount.setName("Tim");
+        newDataAccount.setPrice(90.00);
+        newDataAccount.setOwner("Fernanda");
+        newDataAccount.setPaymentDay(30);
+
+        /**
+         * Quando for atualizar a conta ID = 1L, retornar os novos dados.
+         */
+        Mockito.when( service.update(account) ).thenReturn( newDataAccount );
+
+        /**
+         * Realizando a atualização
+         */
+        FixedAccount accountUpdated = service.update(account);
+
+        assertThat(accountUpdated.getId()).isNotNull();
+        assertThat(accountUpdated.getName()).isEqualTo(newDataAccount.getName());
+        assertThat(accountUpdated.getOwner()).isEqualTo(newDataAccount.getOwner());
+        assertThat(accountUpdated.getPaymentDay()).isEqualTo(newDataAccount.getPaymentDay());
+        assertThat(accountUpdated.getPrice()).isEqualTo(newDataAccount.getPrice());
+    }
+
+    @Test
+    @DisplayName("Tentando atualizar conta fixa que não existe.")
+    public void errorUpdateFixedAccountTest(){
+        // Dados da conta que eu quero atualizar
+        FixedAccount account = createValidAccount();
+        account.setId(null);
+
+        //execução
+        Throwable exception = Assertions.catchThrowable(() -> service.update(account));
+
+        // verificações
+        assertThat(exception)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Id não pode ser nulo.");
+    }
+
     private FixedAccount createValidAccount(){
         return FixedAccount.builder()
 				.name("Vivo")
