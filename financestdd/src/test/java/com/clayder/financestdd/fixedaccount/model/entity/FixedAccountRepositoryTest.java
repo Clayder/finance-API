@@ -86,6 +86,35 @@ public class FixedAccountRepositoryTest {
         assertThat( accountSaved.getId() ).isNotNull();
     }
 
+    @Test
+    @DisplayName("Deve deletar uma conta fixa com sucesso.")
+    public void deleteFixedAccountTest(){
+
+        /**
+         * Para deletar uma conta fixa pelo ID, primeiro temos que inserir ela na
+         * base de dados.
+         */
+        FixedAccount account = createNewFixedAccount();
+        entityManager.persist(account);
+
+        /**
+         * Pesquisando e deletando a conta da base de dados
+         */
+        FixedAccount foundAccount = entityManager.find( FixedAccount.class, account.getId() );
+        repository.delete(foundAccount);
+
+        /**
+         * Pesquisando a conta deletada
+         */
+        FixedAccount deletedAccount = entityManager.find( FixedAccount.class, account.getId() );
+
+        /**
+         * Testando se a conta realmente foi deletada
+         */
+        assertThat( deletedAccount ).isNull();
+
+    }
+
     private FixedAccount createNewFixedAccount() {
         return FixedAccount.builder()
                 .name("vivo")
