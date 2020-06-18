@@ -3,6 +3,8 @@ package com.clayder.financestdd.api.fixedaccount.controller;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,9 @@ import com.clayder.financestdd.api.fixedaccount.dto.FixedAccountDTO;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/fixed-accounts")
@@ -63,5 +68,19 @@ public class FixedAccountController {
         service.update(account);
 
         return modelMapper.map(account, FixedAccountDTO.class);
+    }
+
+    @GetMapping
+    public Page<FixedAccountDTO> find(FixedAccountDTO dto, Pageable pageRequest){
+
+        FixedAccount filter = modelMapper.map(dto, FixedAccount.class);
+        Page<FixedAccount> resultPage = service.find(filter, pageRequest);
+
+        List<FixedAccountDTO> list = resultPage.getContent()
+                .stream()
+                .map(entity -> modelMapper.map(entity, FixedAccountDTO.class))
+                .collect(Collectors.toList());
+
+        return new PageImpl<FixedAccountDTO>(list, pageRequest, resultPage.getTotalElements());
     }
 }

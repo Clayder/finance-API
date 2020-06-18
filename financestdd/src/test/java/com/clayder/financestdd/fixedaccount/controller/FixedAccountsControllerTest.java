@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -24,6 +26,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.print.attribute.standard.Media;
+import org.springframework.data.domain.Pageable;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -284,6 +288,47 @@ public class FixedAccountsControllerTest {
 		mvc.perform( request )
 				.andExpect( status().isNotFound() );
     }
+
+    @Test
+	@DisplayName("[200] Deve filtrar as contas fixas.")
+    public void findFixedAccount() throws Exception {
+
+		/**
+		 * Criando uma nova conta
+		 */
+		Long id = 1L;
+		FixedAccount account = createNewAccount();
+		account.setId(id);
+
+		/**
+		 * Simulando a paginação
+		 */
+		PageImpl<FixedAccount> accountPage = new PageImpl<FixedAccount>(Arrays.asList(account), PageRequest.of(0, 100), 1);
+		BDDMockito.given( service.find( Mockito.any( FixedAccount.class ), Mockito.any(Pageable.class) ) )
+				.willReturn(accountPage);
+
+
+		/**
+		 * Realizando a consulta
+		 */
+		String queryString = String.format("?name=%s&page=0&size=100", account.getName() );
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.get(FIXED_ACCOUNT_API.concat(queryString))
+				.accept(MediaType.APPLICATION_JSON);
+
+		/**
+		 * Verificando o resultado
+		 */
+		mvc
+				.perform( request )
+				.andExpect( status().isOk() )
+				.andExpect( jsonPath( "content", Matchers.hasSize(1) ) )
+				.andExpect( jsonPath( "totalElements").value(1))
+				.andExpect( jsonPath( "pageable.pageSize").value(100) )
+				.andExpect( jsonPath( "pageable.pageNumber").value(0) )
+		;
+
+	}
 
     private FixedAccountDTO createNewAccountDTO(){
 		return FixedAccountDTO.builder()
