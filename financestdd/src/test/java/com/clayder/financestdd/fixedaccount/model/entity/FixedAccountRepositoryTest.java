@@ -75,6 +75,17 @@ public class FixedAccountRepositoryTest {
         assertThat(foundAccount.isPresent()).isTrue();
     }
 
+    @Test
+    @DisplayName("Deve salvar uma conta fixa com sucesso.")
+    public void saveFixedAccountTest(){
+
+        FixedAccount account = createNewFixedAccount();
+
+        FixedAccount accountSaved = repository.save(account);
+
+        assertThat( accountSaved.getId() ).isNotNull();
+    }
+
     private FixedAccount createNewFixedAccount() {
         return FixedAccount.builder()
                 .name("vivo")
