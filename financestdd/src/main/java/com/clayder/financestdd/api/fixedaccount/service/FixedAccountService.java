@@ -3,6 +3,8 @@ package com.clayder.financestdd.api.fixedaccount.service;
 import com.clayder.financestdd.api.exceptions.type.BusinessException;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.model.repository.IFixedAccountRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +52,16 @@ public class FixedAccountService implements IFixedAccountService {
 
     @Override
     public Page<FixedAccount> find(FixedAccount filter, Pageable pageRequest) {
-        return null;
+
+        Example<FixedAccount> example = Example.of(filter,
+                ExampleMatcher
+                        .matching()
+                        .withIgnoreCase()
+                        .withIgnoreNullValues()
+                        .withStringMatcher(
+                                ExampleMatcher.StringMatcher.CONTAINING
+                        ));
+
+        return repository.findAll(example, pageRequest);
     }
 }
