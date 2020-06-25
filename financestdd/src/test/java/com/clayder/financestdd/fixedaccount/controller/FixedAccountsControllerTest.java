@@ -96,7 +96,34 @@ public class FixedAccountsControllerTest {
 
 		mvc.perform(request)
 				.andExpect( status().isBadRequest())
-				.andExpect( jsonPath("errors", Matchers.hasSize(3)))
+				.andExpect( jsonPath("errors", Matchers.hasSize(4)))
+				.andExpect( jsonPath("status", Matchers.equalTo(400)))
+				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
+				.andExpect( jsonPath("timeStamp").isNotEmpty());
+	}
+
+	@Test
+	@DisplayName("[400] Criando conta fixa com dados inválidos.")
+	public void createFixedAccountInvalidDataTest() throws Exception {
+
+		FixedAccountDTO account = FixedAccountDTO.builder()
+				.name("V")
+				.owner("P")
+				.paymentDay(1000)
+				.price(0)
+				.build();
+
+		String json = new ObjectMapper().writeValueAsString(account);
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.post(FIXED_ACCOUNT_API)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content(json);
+
+		mvc.perform(request)
+				.andExpect( status().isBadRequest())
+				.andExpect( jsonPath("errors", Matchers.hasSize(4)))
 				.andExpect( jsonPath("status", Matchers.equalTo(400)))
 				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
 				.andExpect( jsonPath("timeStamp").isNotEmpty());
