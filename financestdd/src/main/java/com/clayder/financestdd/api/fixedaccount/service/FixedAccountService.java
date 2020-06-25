@@ -3,12 +3,9 @@ package com.clayder.financestdd.api.fixedaccount.service;
 import com.clayder.financestdd.api.exceptions.type.BusinessException;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.model.repository.IFixedAccountRepository;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import org.springframework.data.domain.Pageable;
 import java.util.Optional;
 
 @Service
