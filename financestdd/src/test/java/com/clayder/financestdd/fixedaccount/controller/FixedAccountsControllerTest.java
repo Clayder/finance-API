@@ -264,7 +264,7 @@ public class FixedAccountsControllerTest {
                                 .paymentDay(22)
                                 .price(54.99)
                                 .build()
-                )); // retornar novos dados oara a conta
+                )); // retornar os dados antigos
 
 		/**
 		 * Sempre que atualizar uma conta, retornar a propria conta
@@ -284,6 +284,84 @@ public class FixedAccountsControllerTest {
 				.andExpect(jsonPath("price").value(accountUpdate.getPrice()))
 				.andExpect(jsonPath("paymentDay").value(accountUpdate.getPaymentDay()))
 				.andExpect(jsonPath("owner").value(accountUpdate.getOwner()));
+    }
+
+    @Test
+    @DisplayName("[400] Atualizando conta fixa com dados vazios")
+	public void updateFixedAccountEmptyTest() throws Exception{
+        // cenario
+
+        Long id = 1L;
+
+        String json = new ObjectMapper().writeValueAsString(new FixedAccountDTO());
+
+        BDDMockito.
+				given( service.getById(id) ) // Sempre que pesquisar pelo id
+				.willReturn(Optional.of(
+				        FixedAccount.builder()
+                                .id(id)
+                                .name("Vivo")
+                                .owner("Peter")
+                                .paymentDay(22)
+                                .price(54.99)
+                                .build()
+                )); // retornar os dados antigos
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put(FIXED_ACCOUNT_API.concat("/"+id))
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+		mvc.perform(request)
+				.andExpect( status().isBadRequest())
+				.andExpect( jsonPath("errors", Matchers.hasSize(4)))
+				.andExpect( jsonPath("status", Matchers.equalTo(400)))
+				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
+				.andExpect( jsonPath("timeStamp").isNotEmpty());
+    }
+
+    @Test
+    @DisplayName("[400] Atualizando conta fixa com dados inválidos")
+	public void updateFixedAccountInvalidDataTest() throws Exception{
+        // cenario
+
+        Long id = 1L;
+
+        // cenario
+        FixedAccountDTO account = FixedAccountDTO.builder()
+				.name("V")
+				.owner("P")
+				.paymentDay(1000)
+				.price(0)
+				.build();
+
+        String json = new ObjectMapper().writeValueAsString(account);
+
+        BDDMockito.
+				given( service.getById(id) ) // Sempre que pesquisar pelo id
+				.willReturn(Optional.of(
+				        FixedAccount.builder()
+                                .id(id)
+                                .name("Vivo")
+                                .owner("Peter")
+                                .paymentDay(22)
+                                .price(54.99)
+                                .build()
+                )); // retornar os dados antigos
+
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+				.put(FIXED_ACCOUNT_API.concat("/"+id))
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+		mvc.perform(request)
+				.andExpect( status().isBadRequest())
+				.andExpect( jsonPath("errors", Matchers.hasSize(4)))
+				.andExpect( jsonPath("status", Matchers.equalTo(400)))
+				.andExpect( jsonPath("msg", Matchers.equalTo("Erro de validação")))
+				.andExpect( jsonPath("timeStamp").isNotEmpty());
     }
 
     @Test

@@ -56,7 +56,7 @@ public class FixedAccountController {
     }
 
     @PutMapping("{id}")
-    public FixedAccountDTO update(@RequestBody FixedAccount dto, @PathVariable Long id) {
+    public FixedAccountDTO update(@RequestBody @Valid FixedAccountDTO dto, @PathVariable Long id) {
 
         FixedAccount account = service.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
