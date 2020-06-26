@@ -5,11 +5,13 @@ import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.exceptions.type.BusinessException;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -47,6 +49,16 @@ public class FixedAccountsControllerTest {
 	IFixedAccountService service;
 
 	private final String FIXED_ACCOUNT_API = "/api/v1/fixed-accounts";
+
+	private ModelMapper modelMapper;
+
+	 /**
+     * Método será executado antes de cada teste
+     */
+    @BeforeEach
+    public void setUp() {
+        this.modelMapper = new ModelMapper();
+    }
 
 	@Test
 	@DisplayName("[201] Criando conta fixa com sucesso.")
@@ -244,7 +256,7 @@ public class FixedAccountsControllerTest {
         Long id = 1L;
 
         // cenario
-        FixedAccount accountUpdate = FixedAccount.builder()
+        FixedAccountDTO accountUpdate = FixedAccountDTO.builder()
                 .id(id)
                 .name("Tim")
 				.owner("Fernanda")
@@ -269,7 +281,8 @@ public class FixedAccountsControllerTest {
 		/**
 		 * Sempre que atualizar uma conta, retornar a propria conta
 		 */
-        BDDMockito.given(service.update(accountUpdate)).willReturn(accountUpdate);
+
+        BDDMockito.given(service.update(modelMapper.map(accountUpdate, FixedAccount.class))).willReturn(modelMapper.map(accountUpdate, FixedAccount.class));
 
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
 				.put(FIXED_ACCOUNT_API.concat("/"+id))

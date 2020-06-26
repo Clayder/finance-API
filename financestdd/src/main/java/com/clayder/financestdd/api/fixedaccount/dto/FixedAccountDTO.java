@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class FixedAccountDTO {
 
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     @Length(min=2, max=50)
