@@ -1,6 +1,7 @@
 package com.clayder.financestdd.api.exceptions.controller;
 
 import com.clayder.financestdd.api.exceptions.type.BusinessException;
+import com.clayder.financestdd.api.exceptions.type.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -28,6 +29,12 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> dataIntegrity(BusinessException e, HttpServletRequest request) {
 		StandardError err = new StandardError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+	}
+
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+		StandardError err = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 
 }

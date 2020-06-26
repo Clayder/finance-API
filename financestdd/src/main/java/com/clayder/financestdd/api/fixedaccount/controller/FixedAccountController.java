@@ -1,5 +1,6 @@
 package com.clayder.financestdd.api.fixedaccount.controller;
 
+import com.clayder.financestdd.api.exceptions.type.ObjectNotFoundException;
 import com.clayder.financestdd.api.fixedaccount.model.entity.FixedAccount;
 import com.clayder.financestdd.api.fixedaccount.service.IFixedAccountService;
 import org.modelmapper.ModelMapper;
@@ -43,7 +44,7 @@ public class FixedAccountController {
         return service
                 .getById(id)
                 .map(account -> modelMapper.map(account, FixedAccountDTO.class))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ObjectNotFoundException("Conta não encontrada"));
 
     }
 
